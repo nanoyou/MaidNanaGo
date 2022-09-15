@@ -6,3 +6,4 @@
 - [Logrus](https://github.com/sirupsen/logrus) 日志管理
 - [Cron](https://github.com/robfig/cron) 定时任务
 - [Iris](https://github.com/kataras/iris) web 框架
+- [Swagger](https://github.com/iris-contrib/swagger) Go swagger
