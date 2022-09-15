@@ -1,6 +1,10 @@
 package main
 
 import (
+	"embed"
+	"io/fs"
+	"net/http"
+
 	"github.com/iris-contrib/swagger"
 	"github.com/iris-contrib/swagger/swaggerFiles"
 	"github.com/kataras/iris/v12"
@@ -10,6 +14,9 @@ import (
 	"github.com/nanoyou/MaidNanaGo/middleware"
 	"github.com/nanoyou/MaidNanaGo/mirai"
 )
+
+//go:embed MaidNanaFrontEnd/dist/*
+var frontEndDist embed.FS
 
 // @title       Main Nana API 文档
 // @version    	1.0.0-alpha
@@ -21,6 +28,11 @@ func main() {
 	mirai.InitBot()
 	app := iris.New()
 
+	frontEnd, _ := fs.Sub(frontEndDist, "MaidNanaFrontEnd/dist")
+	app.HandleDir("/", http.FS(frontEnd), iris.DirOptions{
+		IndexName: "index.html",
+		SPA:       true,
+	})
 	api := app.Party("/api")
 	{
 		api.Use(middleware.Cors())
