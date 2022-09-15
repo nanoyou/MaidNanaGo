@@ -1,7 +1,52 @@
 {
     "swagger": "2.0",
     "info": {
-        "contact": {}
+        "description": "Maid Nana 的 Web API",
+        "title": "Main Nana API 文档",
+        "contact": {},
+        "version": "1.0.0-alpha"
     },
-    "paths": {}
+    "paths": {
+        "/api/about": {
+            "get": {
+                "description": "获取 Maid Nana 调试信息",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "about"
+                ],
+                "summary": "调试信息",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/controller.DebugInfo"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "controller.DebugInfo": {
+            "type": "object",
+            "properties": {
+                "qq": {
+                    "type": "object",
+                    "properties": {
+                        "account": {
+                            "type": "integer"
+                        },
+                        "online": {
+                            "type": "boolean"
+                        }
+                    }
+                },
+                "version": {
+                    "type": "string"
+                }
+            }
+        }
+    }
 }

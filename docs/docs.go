@@ -15,17 +15,59 @@ const docTemplate = `{
     },
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
-    "paths": {}
+    "paths": {
+        "/api/about": {
+            "get": {
+                "description": "获取 Maid Nana 调试信息",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "about"
+                ],
+                "summary": "调试信息",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/controller.DebugInfo"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "controller.DebugInfo": {
+            "type": "object",
+            "properties": {
+                "qq": {
+                    "type": "object",
+                    "properties": {
+                        "account": {
+                            "type": "integer"
+                        },
+                        "online": {
+                            "type": "boolean"
+                        }
+                    }
+                },
+                "version": {
+                    "type": "string"
+                }
+            }
+        }
+    }
 }`
 
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
-	Version:          "",
+	Version:          "1.0.0-alpha",
 	Host:             "",
 	BasePath:         "",
 	Schemes:          []string{},
-	Title:            "",
-	Description:      "",
+	Title:            "Main Nana API 文档",
+	Description:      "Maid Nana 的 Web API",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,
 }

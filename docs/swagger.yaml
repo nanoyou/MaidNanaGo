@@ -1,4 +1,33 @@
+definitions:
+  controller.DebugInfo:
+    properties:
+      qq:
+        properties:
+          account:
+            type: integer
+          online:
+            type: boolean
+        type: object
+      version:
+        type: string
+    type: object
 info:
   contact: {}
-paths: {}
+  description: Maid Nana 的 Web API
+  title: Main Nana API 文档
+  version: 1.0.0-alpha
+paths:
+  /api/about:
+    get:
+      description: 获取 Maid Nana 调试信息
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/controller.DebugInfo'
+      summary: 调试信息
+      tags:
+      - about
 swagger: "2.0"
