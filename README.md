@@ -1,4 +1,10 @@
 # Maid Nana
+## 食用方法
+
+### 安装 swag
+```bash
+go install github.com/swaggo/swag/cmd/swag@latest
+```
 
 ## 第三方库
 - [MiraiGo-Template](https://github.com/Logiase/MiraiGo-Template) QQ机器人
