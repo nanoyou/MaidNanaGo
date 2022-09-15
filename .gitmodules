@@ -1,0 +1,3 @@
+[submodule "MaidNanaFrontEnd"]
+	path = MaidNanaFrontEnd
+	url = git@github.com:nanoyou/MaidNanaFrontEnd.git
