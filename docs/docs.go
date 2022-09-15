@@ -41,6 +41,9 @@ const docTemplate = `{
         "controller.DebugInfo": {
             "type": "object",
             "properties": {
+                "goVersion": {
+                    "type": "string"
+                },
                 "qq": {
                     "type": "object",
                     "properties": {

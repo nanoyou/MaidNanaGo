@@ -1,6 +1,8 @@
 definitions:
   controller.DebugInfo:
     properties:
+      goVersion:
+        type: string
       qq:
         properties:
           account:
