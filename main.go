@@ -5,6 +5,7 @@ import (
 	"io/fs"
 	"net/http"
 
+	"github.com/go-playground/validator/v10"
 	"github.com/iris-contrib/swagger"
 	"github.com/iris-contrib/swagger/swaggerFiles"
 	"github.com/kataras/iris/v12"
@@ -29,6 +30,7 @@ func main() {
 	mirai.InitBot()
 	model.Init()
 	app := iris.New()
+	app.Validator = validator.New()
 
 	frontEnd, _ := fs.Sub(frontEndDist, "MaidNanaFrontEnd/dist")
 	app.HandleDir("/", http.FS(frontEnd), iris.DirOptions{
@@ -51,6 +53,11 @@ func main() {
 
 		debugController := new(controller.DebugController)
 		api.Get("/about", debugController.About)
+		userController := new(controller.UserController)
+		user := api.Party("/user")
+		{
+			user.Post("/", userController.Register)
+		}
 	}
 
 	app.Listen(":5277")

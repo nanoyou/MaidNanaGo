@@ -6,9 +6,11 @@ type Response struct {
 
 type SuccessResponse struct {
 	Response
+	SuccessMessage string `json:"success_message"`
 }
 
-type ErrorResponse struct {
+type FailureResponse struct {
 	Response
+	Error        string `json:"error"`
 	ErrorMessage string `json:"error_message"`
 }
