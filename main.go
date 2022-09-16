@@ -13,6 +13,7 @@ import (
 	_ "github.com/nanoyou/MaidNanaGo/docs"
 	"github.com/nanoyou/MaidNanaGo/middleware"
 	"github.com/nanoyou/MaidNanaGo/mirai"
+	"github.com/nanoyou/MaidNanaGo/model"
 )
 
 //go:embed MaidNanaFrontEnd/dist/*
@@ -26,6 +27,7 @@ var frontEndDist embed.FS
 // @base 	/api
 func main() {
 	mirai.InitBot()
+	model.Init()
 	app := iris.New()
 
 	frontEnd, _ := fs.Sub(frontEndDist, "MaidNanaFrontEnd/dist")
