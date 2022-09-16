@@ -14,3 +14,4 @@ go install github.com/swaggo/swag/cmd/swag@latest
 - [Iris](https://github.com/kataras/iris) web 框架
 - [Swagger](https://github.com/iris-contrib/swagger) Go swagger
 - [Gorm](https://gorm.io/docs/)
+- [Validator](https://github.com/go-playground/validator/v10) 参数校验
