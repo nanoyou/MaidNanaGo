@@ -6,7 +6,7 @@ import (
 	"github.com/Logiase/MiraiGo-Template/bot"
 	lc "github.com/Logiase/MiraiGo-Template/config"
 	"github.com/nanoyou/MaidNanaGo/config"
-	"github.com/nanoyou/MaidNanaGo/util"
+	"github.com/nanoyou/MaidNanaGo/util/file"
 	"github.com/sirupsen/logrus"
 )
 
@@ -14,7 +14,7 @@ func InitBot() {
 	lc.GlobalConfig = &lc.Config{Viper: config.Config}
 
 	bot.InitBot(config.Config.GetInt64("bot.qq"), config.Config.GetString("bot.password"))
-	if !util.FileExists("./device.json") {
+	if !file.FileExists("./device.json") {
 		bot.GenRandomDevice()
 	}
 	bot.StartService()
