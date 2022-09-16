@@ -1,5 +1,5 @@
 definitions:
-  controller.DebugInfo:
+  response.DebugInfo:
     properties:
       goVersion:
         type: string
@@ -28,7 +28,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/controller.DebugInfo'
+            $ref: '#/definitions/response.DebugInfo'
       summary: 调试信息
       tags:
       - about

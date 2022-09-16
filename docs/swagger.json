@@ -21,7 +21,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/controller.DebugInfo"
+                            "$ref": "#/definitions/response.DebugInfo"
                         }
                     }
                 }
@@ -29,7 +29,7 @@
         }
     },
     "definitions": {
-        "controller.DebugInfo": {
+        "response.DebugInfo": {
             "type": "object",
             "properties": {
                 "goVersion": {

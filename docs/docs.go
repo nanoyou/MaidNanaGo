@@ -30,7 +30,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/controller.DebugInfo"
+                            "$ref": "#/definitions/response.DebugInfo"
                         }
                     }
                 }
@@ -38,7 +38,7 @@ const docTemplate = `{
         }
     },
     "definitions": {
-        "controller.DebugInfo": {
+        "response.DebugInfo": {
             "type": "object",
             "properties": {
                 "goVersion": {
