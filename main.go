@@ -6,7 +6,6 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/go-playground/validator/v10"
 	"github.com/iris-contrib/swagger"
 	"github.com/iris-contrib/swagger/swaggerFiles"
 	"github.com/kataras/iris/v12"
@@ -18,6 +17,7 @@ import (
 	"github.com/nanoyou/MaidNanaGo/middleware"
 	"github.com/nanoyou/MaidNanaGo/mirai"
 	"github.com/nanoyou/MaidNanaGo/model"
+	"github.com/nanoyou/MaidNanaGo/validator"
 )
 
 //go:embed MaidNanaFrontEnd/dist/*
@@ -39,7 +39,7 @@ func main() {
 	// 初始化 web 框架
 	app := iris.New()
 	// 注入校验器
-	app.Validator = validator.New()
+	app.Validator = validator.Get()
 
 	session := sessions.New(sessions.Config{
 		Cookie: "MaidNana",
