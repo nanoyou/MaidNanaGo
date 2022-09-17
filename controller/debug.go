@@ -13,7 +13,7 @@ type DebugController struct{}
 // @summary 		调试信息
 // @description	 	获取 Maid Nana 调试信息
 // @produce 		json
-// @tags			about
+// @tags			debug
 // @router 			/api/about [get]
 // @success 		200	{object} response.DebugInfo
 func (dc *DebugController) About(ctx iris.Context) {

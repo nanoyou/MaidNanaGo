@@ -44,7 +44,7 @@ func (u *UserService) Login(name string, password string) (user *model.User, err
 	// 查找用户是否存在
 	user, err = model.GetUserByName(name)
 	if err != nil {
-		return nil, err
+		return nil, errors.New("用户名不存在")
 	}
 
 	// 验证密码是否正确

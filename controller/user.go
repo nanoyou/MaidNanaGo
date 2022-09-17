@@ -15,7 +15,7 @@ type UserController struct{}
 // @accept 			json
 // @produce 		json
 // @param			body body request.RegisterRequest true "注册参数"
-// @tags			account, user, register
+// @tags			user
 // @router 			/api/user [post]
 // @success 		200	{object} response.UserResponse
 // @failure 		200	{object} response.FailureResponse
@@ -65,9 +65,9 @@ func (uc *UserController) Register(ctx iris.Context) {
 // @description	 	登录账号
 // @accept 			json
 // @produce 		json
-// @param 			path username string true "用户名"
+// @param 			username path string true "用户名"
 // @param			body body request.LoginRequest true "登录参数"
-// @tags			account, user, login
+// @tags			user
 // @router 			/api/user/{username}/login [post]
 // @success 		200	{object} response.UserResponse
 // @failure 		200	{object} response.FailureResponse
@@ -93,7 +93,7 @@ func (uc *UserController) Login(ctx iris.Context) {
 		r := &response.FailureResponse{}
 		r.Ok = false
 		r.Error = err.Error()
-		r.ErrorMessage = "登录失败"
+		r.ErrorMessage = "登录失败, 用户名错误或密码错误"
 		ctx.JSON(r)
 		return
 	}
