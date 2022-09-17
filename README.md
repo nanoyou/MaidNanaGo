@@ -15,3 +15,4 @@ go install github.com/swaggo/swag/cmd/swag@latest
 - [Swagger](https://github.com/iris-contrib/swagger) Go swagger
 - [Gorm](https://gorm.io/docs/)
 - [Validator](https://github.com/go-playground/validator/v10) 参数校验
+- [FreeCache](https://github.com/coocood/freecache) 缓存
