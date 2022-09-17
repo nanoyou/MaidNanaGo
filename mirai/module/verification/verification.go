@@ -53,7 +53,7 @@ func (v *Verification) Serve(b *bot.Bot) {
 			return
 		}
 		logrus.WithField("code", code).Debug("获取成功")
-		b.SendPrivateMessage(pm.Sender.Uin, message.NewSendingMessage().Append(message.NewText(fmt.Sprintf("您的验证码是: %v", code))))
+		b.SendPrivateMessage(pm.Sender.Uin, message.NewSendingMessage().Append(message.NewText(fmt.Sprintf("您的验证码是: %v, 10分钟内有效", code))))
 	})
 }
 
