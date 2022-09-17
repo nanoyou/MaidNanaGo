@@ -19,9 +19,11 @@ type UserController struct{}
 // @success 		200	{object} response.RegisterSuccessResponse
 // @failure 		200	{object} response.FailureResponse
 func (uc *UserController) Register(ctx iris.Context) {
+	// 读取 http 参数体
 	var body request.RegisterRequest
 	err := ctx.ReadJSON(&body)
 	if err != nil {
+		// 参数不合法
 		r := &response.FailureResponse{}
 		r.Ok = false
 		r.Error = err.Error()
@@ -29,6 +31,8 @@ func (uc *UserController) Register(ctx iris.Context) {
 		ctx.JSON(r)
 		return
 	}
+
+	// 获取验证码对应的 QQ 号
 	qq, err := service.GetUserService().GetQQByVerificationCode(body.VerificationCode)
 	if err != nil {
 		r := &response.FailureResponse{}
@@ -39,6 +43,7 @@ func (uc *UserController) Register(ctx iris.Context) {
 		return
 	}
 
+	// 注册用户
 	user, err := service.GetUserService().Register(body.Username, body.Password, qq)
 	if err != nil {
 		r := &response.FailureResponse{}
