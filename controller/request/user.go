@@ -5,3 +5,7 @@ type RegisterRequest struct {
 	Password         string `json:"password" validate:"required"`
 	VerificationCode int    `json:"verification_code" validate:"required"`
 }
+
+type LoginRequest struct {
+	Password string `json:"password" validate:"required"`
+}

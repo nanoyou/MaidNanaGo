@@ -39,6 +39,22 @@ func (u *UserService) Register(name string, password string, qq int64) (user *mo
 	return
 }
 
+// Login 登录
+func (u *UserService) Login(name string, password string) (user *model.User, err error) {
+	// 查找用户是否存在
+	user, err = model.GetUserByName(name)
+	if err != nil {
+		return nil, err
+	}
+
+	// 验证密码是否正确
+	if !pwd.FromString(user.HashedPassword).Validate(password) {
+		return nil, errors.New("密码错误")
+	}
+
+	return user, nil
+}
+
 // CreateVerificationCode 创建 QQ 验证码, 过期时间为10分钟
 func (u *UserService) CreateVerificationCode(qq int64) (code int, err error) {
 	// 检查该 QQ 是否已经被绑定

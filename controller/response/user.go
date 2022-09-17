@@ -2,7 +2,7 @@ package response
 
 import "github.com/nanoyou/MaidNanaGo/model"
 
-type RegisterSuccessResponse struct {
+type UserResponse struct {
 	SuccessResponse
 	User *model.User
 }

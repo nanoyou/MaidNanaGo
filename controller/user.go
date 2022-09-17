@@ -2,6 +2,7 @@ package controller
 
 import (
 	"github.com/kataras/iris/v12"
+	"github.com/kataras/iris/v12/sessions"
 	"github.com/nanoyou/MaidNanaGo/controller/request"
 	"github.com/nanoyou/MaidNanaGo/controller/response"
 	"github.com/nanoyou/MaidNanaGo/service"
@@ -13,10 +14,10 @@ type UserController struct{}
 // @description	 	注册账号, 需要先在 QQ 上私聊机器人发送 "验证码" 获取验证码
 // @accept 			json
 // @produce 		json
-// @param			body body request.RegisterRequest true "注册信息"
-// @tags			account user register
+// @param			body body request.RegisterRequest true "注册参数"
+// @tags			account, user, register
 // @router 			/api/user [post]
-// @success 		200	{object} response.RegisterSuccessResponse
+// @success 		200	{object} response.UserResponse
 // @failure 		200	{object} response.FailureResponse
 func (uc *UserController) Register(ctx iris.Context) {
 	// 读取 http 参数体
@@ -53,9 +54,56 @@ func (uc *UserController) Register(ctx iris.Context) {
 		ctx.JSON(r)
 		return
 	}
-	r := &response.RegisterSuccessResponse{}
+	r := &response.UserResponse{}
 	r.Ok = true
 	r.User = user
 	ctx.JSON(r)
 
+}
+
+// @summary 		登录
+// @description	 	登录账号
+// @accept 			json
+// @produce 		json
+// @param 			path username string true "用户名"
+// @param			body body request.LoginRequest true "登录参数"
+// @tags			account, user, login
+// @router 			/api/user/{username}/login [post]
+// @success 		200	{object} response.UserResponse
+// @failure 		200	{object} response.FailureResponse
+func (uc *UserController) Login(ctx iris.Context) {
+	// 读取 http 参数体
+	var body request.LoginRequest
+	err := ctx.ReadJSON(&body)
+	if err != nil {
+		// 参数不合法
+		r := &response.FailureResponse{}
+		r.Ok = false
+		r.Error = err.Error()
+		r.ErrorMessage = "参数错误"
+		ctx.JSON(r)
+		return
+	}
+
+	// 获取路由参数中的用户名
+	username := ctx.Params().Get("username")
+	// 校验用户名和密码
+	user, err := service.GetUserService().Login(username, body.Password)
+	if err != nil {
+		r := &response.FailureResponse{}
+		r.Ok = false
+		r.Error = err.Error()
+		r.ErrorMessage = "登录失败"
+		ctx.JSON(r)
+		return
+	}
+
+	// 写入 session
+	session := sessions.Get(ctx)
+	session.Set("user", user.Name)
+
+	r := &response.UserResponse{}
+	r.Ok = true
+	r.User = user
+	ctx.JSON(r)
 }

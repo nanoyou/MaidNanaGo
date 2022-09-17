@@ -4,11 +4,13 @@ import (
 	"embed"
 	"io/fs"
 	"net/http"
+	"time"
 
 	"github.com/go-playground/validator/v10"
 	"github.com/iris-contrib/swagger"
 	"github.com/iris-contrib/swagger/swaggerFiles"
 	"github.com/kataras/iris/v12"
+	"github.com/kataras/iris/v12/sessions"
 
 	"github.com/nanoyou/MaidNanaGo/controller"
 	_ "github.com/nanoyou/MaidNanaGo/docs"
@@ -39,6 +41,12 @@ func main() {
 	// 注入校验器
 	app.Validator = validator.New()
 
+	session := sessions.New(sessions.Config{
+		Cookie:  "MaidNana",
+		Expires: time.Hour * 24 * 7,
+	})
+	app.Use(session.Handler())
+
 	// 处理静态文件
 	frontEnd, _ := fs.Sub(frontEndDist, "MaidNanaFrontEnd/dist")
 	app.HandleDir("/", http.FS(frontEnd), iris.DirOptions{
@@ -67,9 +75,11 @@ func main() {
 		debugController := new(controller.DebugController)
 		api.Get("/about", debugController.About)
 		userController := new(controller.UserController)
-		user := api.Party("/user")
+
+		api.Post("/user", userController.Register)
+		user := api.Party("/user/{username}")
 		{
-			user.Post("/", userController.Register)
+			user.Post("/login", userController.Login)
 		}
 	}
 
