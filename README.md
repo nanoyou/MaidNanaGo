@@ -1,9 +1,21 @@
 # Maid Nana
 ## 食用方法
 
-### 安装 swag
+### 拉取子模块
 ```bash
-go install github.com/swaggo/swag/cmd/swag@latest
+git submodule update
+```
+
+### 构建前端
+```bash
+cd MaidNanaFrontEnd
+npm install
+npm run build
+```
+
+### 运行项目
+```bash
+./run
 ```
 
 ## 第三方库
