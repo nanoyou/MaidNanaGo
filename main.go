@@ -12,6 +12,7 @@ import (
 
 	"github.com/nanoyou/MaidNanaGo/controller"
 	_ "github.com/nanoyou/MaidNanaGo/docs"
+	"github.com/nanoyou/MaidNanaGo/logger"
 	"github.com/nanoyou/MaidNanaGo/middleware"
 	"github.com/nanoyou/MaidNanaGo/mirai"
 	"github.com/nanoyou/MaidNanaGo/model"
@@ -27,6 +28,7 @@ var frontEndDist embed.FS
 // @host	localhost:5277
 // @base 	/api
 func main() {
+	logger.Init()
 	mirai.InitBot()
 	model.Init()
 	app := iris.New()

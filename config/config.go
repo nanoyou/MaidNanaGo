@@ -12,13 +12,14 @@ var Config *viper.Viper
 func init() {
 	logrus.Info("加载配置文件")
 	Config = viper.New()
-	Config.AddConfigPath("./config")
-	Config.SetConfigFile("MaidNana")
+	Config.SetConfigFile("config.json")
 	Config.SetConfigType("json")
 
 	Config.SetDefault("bot.qq", 114514191810)
 	Config.SetDefault("bot.password", "QQ密码")
 	Config.SetDefault("bot.loginmethod", "common")
+
+	Config.SetDefault("logger.level", logrus.InfoLevel)
 
 	err := Config.ReadInConfig()
 	if err != nil {

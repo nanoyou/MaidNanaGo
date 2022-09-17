@@ -3,6 +3,8 @@ package mirai
 import (
 	"os"
 
+	_ "github.com/nanoyou/MaidNanaGo/mirai/module/verification"
+
 	"github.com/Logiase/MiraiGo-Template/bot"
 	lc "github.com/Logiase/MiraiGo-Template/config"
 	"github.com/nanoyou/MaidNanaGo/config"
