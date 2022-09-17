@@ -28,20 +28,30 @@ var frontEndDist embed.FS
 // @host	localhost:5277
 // @base 	/api
 func main() {
+	// 初始化日志
 	logger.Init()
+	// 初始化 QQ 机器人
 	mirai.InitBot()
+	// 初始化数据库
 	model.Init()
+	// 初始化 web 框架
 	app := iris.New()
+	// 注入校验器
 	app.Validator = validator.New()
 
+	// 处理静态文件
 	frontEnd, _ := fs.Sub(frontEndDist, "MaidNanaFrontEnd/dist")
 	app.HandleDir("/", http.FS(frontEnd), iris.DirOptions{
 		IndexName: "index.html",
 		SPA:       true,
 	})
+
 	api := app.Party("/api")
 	{
+		// 跨域中间件
 		api.Use(middleware.Cors())
+
+		// API 文档
 		swaggerConfig := swagger.Config{
 			URL:          "http://localhost:5277/api/swagger/doc.json",
 			DeepLinking:  true,
@@ -53,6 +63,7 @@ func main() {
 		api.Get("/swagger", swaggerUI)
 		api.Get("/swagger/{any:path}", swaggerUI)
 
+		// Controller
 		debugController := new(controller.DebugController)
 		api.Get("/about", debugController.About)
 		userController := new(controller.UserController)
