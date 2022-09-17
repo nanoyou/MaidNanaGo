@@ -3,6 +3,7 @@ package model
 import (
 	"time"
 
+	"github.com/nanoyou/MaidNanaGo/util/logger"
 	"github.com/sirupsen/logrus"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
@@ -17,6 +18,7 @@ func Init() {
 		logrus.WithError(err).Fatal("打开数据库失败")
 		panic(err)
 	}
+	db.Logger = new(logger.VoidLogger)
 
 	db.AutoMigrate(&User{})
 }
