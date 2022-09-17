@@ -3,6 +3,7 @@
 
 ### 拉取子模块
 ```bash
+git submodule init
 git submodule update
 ```
 
