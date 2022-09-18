@@ -6,3 +6,8 @@ type UserResponse struct {
 	SuccessResponse
 	User *model.User
 }
+
+type UserListResponse struct {
+	SuccessResponse
+	UserList []model.User
+}

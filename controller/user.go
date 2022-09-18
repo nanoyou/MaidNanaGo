@@ -61,6 +61,16 @@ func (uc *UserController) Register(ctx iris.Context) {
 
 }
 
+// @summary 		用户列表
+// @description	 	获取所有用户列表
+// @produce 		json
+// @tags			user
+// @router 			/api/user [get]
+// @success 		200	{object} response.UserListResponse
+func (uc *UserController) UserList(ctx iris.Context) {
+	// TODO: 调用 service, 返回 response.UserListResponse
+}
+
 // @summary 		登录
 // @description	 	登录账号
 // @accept 			json

@@ -84,6 +84,7 @@ func main() {
 		api.Get("/about", debugController.About)
 		userController := new(controller.UserController)
 
+		api.Get("/user", userController.UserList)
 		api.Post("/user", userController.Register)
 		user := api.Party("/user/{username}")
 		{
