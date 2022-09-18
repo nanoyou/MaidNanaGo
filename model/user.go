@@ -44,6 +44,12 @@ func GetUserByQQ(qq int64) (u *User, err error) {
 	return
 }
 
+// GetAllUsers 获取所有用户
+func GetAllUsers() (users []User, err error) {
+	err = db.Model(&User{}).Preload("Roles").Find(&users).Error
+	return
+}
+
 // Update 将更改存入数据库
 func (u *User) Update() error {
 	return db.Updates(&u).Error
