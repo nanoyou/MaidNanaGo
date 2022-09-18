@@ -21,6 +21,8 @@ func init() {
 
 	Config.SetDefault("logger.level", logrus.InfoLevel)
 
+	Config.SetDefault("first_start", true)
+
 	err := Config.ReadInConfig()
 	if err != nil {
 		writeDefaultConfig()

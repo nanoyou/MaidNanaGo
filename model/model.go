@@ -21,6 +21,7 @@ func Init() {
 	db.Logger = new(logger.VoidLogger)
 
 	db.AutoMigrate(&User{})
+	db.AutoMigrate(&Role{})
 }
 
 type BaseModel struct {

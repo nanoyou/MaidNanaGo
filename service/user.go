@@ -115,3 +115,30 @@ func (u *UserService) GetQQByVerificationCode(code int) (qq int64, err error) {
 	}
 	return bytes.BytesToInt64(qqBytes), nil
 }
+
+// AddRole 增加用户权限, 如果权限是管理员则删除所有原有权限
+func (u *UserService) AddRole(username string, role model.RoleType) error {
+	// 查找用户
+	user, err := model.GetUserByName(username)
+	if err != nil {
+		return err
+	}
+
+	roles := []model.RoleType{role}
+	for _, oldRole := range user.Roles {
+		roles = append(roles, oldRole.Role)
+	}
+
+	// 如果包含管理员角色 设置仅设置为管理员
+	for _, oldRole := range roles {
+		if oldRole == model.ADMIN {
+			roles = []model.RoleType{role}
+			break
+		}
+	}
+	logrus.WithField("user", username).WithField("roles", roles).Debug("添加权限")
+
+	// 保存角色
+	return user.SetRole(roles)
+
+}
