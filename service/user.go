@@ -146,5 +146,5 @@ func (u *UserService) AddRole(username string, role model.RoleType) error {
 // GetAllUsers 获取全部用户
 func (u *UserService) GetAllUsers() ([]model.User, error) {
 	// TODO: 调用 model.GetAllUsers() 实现
-	return nil, nil
+	return model.GetAllUsers()
 }
