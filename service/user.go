@@ -131,7 +131,7 @@ func (u *UserService) AddRole(username string, role model.RoleType) error {
 
 	// 如果包含管理员角色 设置仅设置为管理员
 	for _, oldRole := range roles {
-		if oldRole == model.ADMIN {
+		if oldRole == model.SUPER_ADMIN {
 			roles = []model.RoleType{role}
 			break
 		}

@@ -11,7 +11,7 @@ type User struct {
 type RoleType string
 
 const (
-	ADMIN        RoleType = "admin"
+	SUPER_ADMIN  RoleType = "super"
 	ANNOUNCEMENT RoleType = "announcement"
 )
 

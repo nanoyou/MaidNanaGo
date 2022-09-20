@@ -131,7 +131,7 @@ func checkFirstStart() {
 			continue
 		}
 		// 添加管理员权限
-		err = service.GetUserService().AddRole(username, model.ADMIN)
+		err = service.GetUserService().AddRole(username, model.SUPER_ADMIN)
 		if err != nil {
 			logrus.WithError(err).Fatal("添加权限失败")
 			panic(err)
