@@ -138,9 +138,8 @@ func (uc *UserController) Login(ctx iris.Context) {
 // @summary 		登出
 // @description	 	退出登录
 // @produce 		json
-// @param 			username path string true "用户名"
 // @tags			user
-// @router 			/api/user/{username}/logout [post]
+// @router 			/api/logout [post]
 // @success 		200	{object} response.SuccessResponse
 func (uc *UserController) Logout(ctx iris.Context) {
 
