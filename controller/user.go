@@ -147,4 +147,12 @@ func (uc *UserController) Logout(ctx iris.Context) {
 	// 登录状态校验已在中间件中校验过无需重复校验
 	// 本方法不需要调用 service 层
 	// TODO: 写入 session, 具体方法见 129行和130行, 其中session.Set的第二个参数为""(空字符串)
+
+	// 写入 session
+	session := sessions.Get(ctx)
+	session.Set("user", "")
+
+	r := &response.SuccessResponse{}
+	r.Ok = true
+	ctx.JSON(r)
 }
