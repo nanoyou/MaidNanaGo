@@ -62,7 +62,7 @@ func (uc *UserController) Register(ctx iris.Context) {
 }
 
 // @summary 		用户列表
-// @description	 	获取所有用户列表
+// @description	 	获取所有用户列表, 需要超级管理员权限
 // @produce 		json
 // @tags			user
 // @router 			/api/user [get]

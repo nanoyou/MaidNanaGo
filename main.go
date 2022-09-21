@@ -84,7 +84,8 @@ func main() {
 		api.Get("/about", debugController.About)
 		userController := new(controller.UserController)
 
-		api.Get("/user", userController.UserList)
+		superAdmin := middleware.Role(model.SUPER_ADMIN)
+		api.Get("/user", superAdmin, userController.UserList)
 		api.Post("/user", userController.Register)
 		user := api.Party("/user/{username}")
 		{
