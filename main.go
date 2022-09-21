@@ -84,12 +84,15 @@ func main() {
 		api.Get("/about", debugController.About)
 		userController := new(controller.UserController)
 
+		needLogin := middleware.Auth()
 		superAdmin := middleware.Role(model.SUPER_ADMIN)
+
 		api.Get("/user", superAdmin, userController.UserList)
 		api.Post("/user", userController.Register)
 		user := api.Party("/user/{username}")
 		{
 			user.Post("/login", userController.Login)
+			user.Post("/logout", needLogin, userController.Logout)
 		}
 	}
 

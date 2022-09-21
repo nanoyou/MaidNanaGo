@@ -134,3 +134,17 @@ func (uc *UserController) Login(ctx iris.Context) {
 	r.User = user
 	ctx.JSON(r)
 }
+
+// @summary 		登出
+// @description	 	退出登录
+// @produce 		json
+// @param 			username path string true "用户名"
+// @tags			user
+// @router 			/api/user/{username}/logout [post]
+// @success 		200	{object} response.SuccessResponse
+func (uc *UserController) Logout(ctx iris.Context) {
+	// TODO: 退出登录成功返回 response.SuccessResponse, 无失败情况
+	// 登录状态校验已在中间件中校验过无需重复校验
+	// 本方法不需要调用 service 层
+	// TODO: 写入 session, 具体方法见 129行和130行, 其中session.Set的第二个参数为""(空字符串)
+}
