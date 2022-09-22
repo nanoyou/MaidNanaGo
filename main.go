@@ -83,13 +83,15 @@ func main() {
 		debugController := new(controller.DebugController)
 		api.Get("/about", debugController.About)
 		userController := new(controller.UserController)
+		adminController := new(controller.AdminController)
 
+		// 中间件
 		needLogin := middleware.Auth()
 		superAdmin := middleware.Role(model.SUPER_ADMIN)
 
 		api.Post("/logout", needLogin, userController.Logout)
 
-		api.Get("/user", superAdmin, userController.UserList)
+		api.Get("/user", superAdmin, adminController.UserList)
 		api.Post("/user", userController.Register)
 		user := api.Party("/user/{username}")
 		{
