@@ -189,14 +189,14 @@ func (ac *AdminController) DeleteRole(ctx iris.Context) {
 	roleStr := ctx.Params().Get("role")
 
 	// 如果不是合法的权限参数就报错
-	switch roleStr {
-	case string(model.ANNOUNCEMENT), string(model.SUPER_ADMIN):
+	switch model.RoleType(roleStr) {
+	case model.ANNOUNCEMENT, model.SUPER_ADMIN:
 		break
 	default:
 		{
 			r := &response.FailureResponse{}
 			r.Ok = false
-			r.ErrorMessage = "无法设置权限因为这样的权限参数不存在"
+			r.ErrorMessage = "无法删除权限因为这样的权限参数不存在"
 			ctx.JSON(r)
 			return
 		}
