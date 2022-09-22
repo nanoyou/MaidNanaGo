@@ -90,12 +90,15 @@ func main() {
 		superAdmin := middleware.Role(model.SUPER_ADMIN)
 
 		api.Post("/logout", needLogin, userController.Logout)
-
-		api.Get("/user", superAdmin, adminController.UserList)
 		api.Post("/user", userController.Register)
 		user := api.Party("/user/{username}")
 		{
 			user.Post("/login", userController.Login)
+		}
+
+		admin := api.Party("/admin", superAdmin)
+		{
+			admin.Get("/user", adminController.UserList)
 		}
 	}
 

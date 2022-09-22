@@ -12,7 +12,7 @@ type AdminController struct{}
 // @description	 	获取所有用户列表, 需要超级管理员权限
 // @produce 		json
 // @tags			user
-// @router 			/api/user [get]
+// @router 			/api/admin/user [get]
 // @success 		200	{object} response.UserListResponse
 func (ac *AdminController) UserList(ctx iris.Context) {
 
