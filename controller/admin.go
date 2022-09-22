@@ -186,5 +186,36 @@ func (ac *AdminController) DeleteRole(ctx iris.Context) {
 	// 调用 service 取消权限
 	// 失败返回 response.FailureResponse
 	// 成功返回 response.SuccessResponse
+	username := ctx.Params().Get("username")
 
+	roleStr := ctx.Params().Get("role")
+
+	// 如果不是合法的权限参数就报错
+	switch roleStr {
+	case string(model.ANNOUNCEMENT), string(model.SUPER_ADMIN):
+		break
+	default:
+		{
+			r := &response.FailureResponse{}
+			r.Ok = false
+			r.ErrorMessage = "无法设置权限因为这样的权限参数不存在"
+			ctx.JSON(r)
+			return
+		}
+	}
+
+	role := model.RoleType(roleStr)
+	err := service.GetUserService().DeleteRole(username, role)
+
+	if err != nil {
+		r := &response.FailureResponse{}
+		r.Ok = false
+		r.ErrorMessage = "无法设置权限因为该用户不存在"
+		ctx.JSON(r)
+		return
+	}
+
+	r := &response.SuccessResponse{}
+	r.Ok = true
+	ctx.JSON(r)
 }
