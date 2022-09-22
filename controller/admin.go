@@ -131,12 +131,19 @@ func (ac *AdminController) SetRole(ctx iris.Context) {
 	roleStr := ctx.Params().Get("role")
 
 	// 如果不是合法的权限参数就报错
-	if roleStr != string(model.SUPER_ADMIN) || roleStr != string(model.ANNOUNCEMENT) {
-		r := &response.FailureResponse{}
-		r.Ok = false
-		r.ErrorMessage = "无法设置权限因为这样的权限参数不存在"
-		ctx.JSON(r)
-		return
+	switch roleStr {
+	case string(model.ANNOUNCEMENT):
+		break
+	case string(model.SUPER_ADMIN):
+		break
+	default:
+		{
+			r := &response.FailureResponse{}
+			r.Ok = false
+			r.ErrorMessage = "无法设置权限因为这样的权限参数不存在"
+			ctx.JSON(r)
+			return
+		}
 	}
 
 	role := model.RoleType(roleStr)
