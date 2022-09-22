@@ -49,9 +49,8 @@ func main() {
 	app.Validator = validator.Get()
 
 	session := sessions.New(sessions.Config{
-		Cookie: "MaidNana",
-		// Expires: time.Hour * 24 * 7,
-		Expires: time.Minute, //测试
+		Cookie:  "MaidNana",
+		Expires: time.Hour * 24 * 7,
 	})
 	app.Use(session.Handler())
 
