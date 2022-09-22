@@ -99,6 +99,10 @@ func main() {
 		admin := api.Party("/admin", superAdmin)
 		{
 			admin.Get("/user", adminController.UserList)
+			adminUser := admin.Party("/user/{username}")
+			{
+				adminUser.Put("/", adminController.ModifyUser)
+			}
 		}
 	}
 

@@ -147,3 +147,25 @@ func (u *UserService) AddRole(username string, role model.RoleType) error {
 func (u *UserService) GetAllUsers() ([]model.User, error) {
 	return model.GetAllUsers()
 }
+
+// GetUser 获取用户
+func (u *UserService) GetUser(username string) (*model.User, error) {
+	return model.GetUserByName(username)
+}
+
+// ModifyUser 修改用户信息
+func (u *UserService) ModifyUser(user *model.User) error {
+	return user.Update()
+}
+
+// ChangePassword 修改用户密码
+func (u *UserService) ChangePassword(username string, password string) error {
+	user, err := u.GetUser(username)
+	if err != nil {
+		return err
+	}
+
+	// 散列密码
+	user.HashedPassword = pwd.NewSHA512Password(password).String()
+	return user.Update()
+}
