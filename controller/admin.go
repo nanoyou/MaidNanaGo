@@ -131,10 +131,8 @@ func (ac *AdminController) SetRole(ctx iris.Context) {
 	roleStr := ctx.Params().Get("role")
 
 	// 如果不是合法的权限参数就报错
-	switch roleStr {
-	case string(model.ANNOUNCEMENT):
-		break
-	case string(model.SUPER_ADMIN):
+	switch model.RoleType(roleStr) {
+	case model.ANNOUNCEMENT, model.SUPER_ADMIN:
 		break
 	default:
 		{
