@@ -113,3 +113,40 @@ func (ac *AdminController) ModifyUser(ctx iris.Context) {
 	r.Ok = true
 	ctx.JSON(r)
 }
+
+// @summary 		设置用户角色
+// @description	 	设置用户的角色, 若已拥有仍返回成功, 需要管理员权限
+// @produce 		json
+// @param 			username path string true "用户名"
+// @param 			role path string true "角色"
+// @tags			admin, user
+// @router 			/api/admin/user/{username}/role/{role} [put]
+// @success 		200	{object} response.SuccessResponse
+// @failure 		200	{object} response.FailureResponse
+func (ac *AdminController) SetRole(ctx iris.Context) {
+	// TODO: implement
+	// 无需获取请求体
+	// 获取路由参数中的 username 和 role(需要从string转化成model.RoleType)
+	// 调用 service 设置权限
+	// 失败返回 response.FailureResponse
+	// 成功返回 response.SuccessResponse
+}
+
+// @summary 		删除用户角色
+// @description	 	删除用户的角色, 需要管理员权限
+// @produce 		json
+// @param 			username path string true "用户名"
+// @param 			role path string true "角色"
+// @tags			admin, user
+// @router 			/api/admin/user/{username}/role/{role} [delete]
+// @success 		200	{object} response.SuccessResponse
+// @failure 		200	{object} response.FailureResponse
+func (ac *AdminController) DeleteRole(ctx iris.Context) {
+	// TODO: implement
+	// 无需获取请求体
+	// 获取路由参数中的 username 和 role(需要从string转化成model.RoleType)
+	// 调用 service 取消权限
+	// 失败返回 response.FailureResponse
+	// 成功返回 response.SuccessResponse
+
+}

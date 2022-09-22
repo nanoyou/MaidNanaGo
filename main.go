@@ -102,6 +102,8 @@ func main() {
 			adminUser := admin.Party("/user/{username}")
 			{
 				adminUser.Put("/", adminController.ModifyUser)
+				adminUser.Put("/role/{role}", adminController.SetRole)
+				adminUser.Delete("/role/{role}", adminController.DeleteRole)
 			}
 		}
 	}
@@ -145,7 +147,7 @@ func checkFirstStart() {
 			continue
 		}
 		// 添加管理员权限
-		err = service.GetUserService().AddRole(username, model.SUPER_ADMIN)
+		err = service.GetUserService().SetRole(username, model.SUPER_ADMIN)
 		if err != nil {
 			logrus.WithError(err).Fatal("添加权限失败")
 			panic(err)
