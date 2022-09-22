@@ -4,6 +4,7 @@ import (
 	"github.com/kataras/iris/v12"
 	"github.com/nanoyou/MaidNanaGo/controller/request"
 	"github.com/nanoyou/MaidNanaGo/controller/response"
+	"github.com/nanoyou/MaidNanaGo/model"
 	"github.com/nanoyou/MaidNanaGo/service"
 )
 
@@ -124,12 +125,42 @@ func (ac *AdminController) ModifyUser(ctx iris.Context) {
 // @success 		200	{object} response.SuccessResponse
 // @failure 		200	{object} response.FailureResponse
 func (ac *AdminController) SetRole(ctx iris.Context) {
+
+	username := ctx.Params().Get("username")
+
+	roleStr := ctx.Params().Get("role")
+
+	// 如果不是合法的权限参数就报错
+	if roleStr != string(model.SUPER_ADMIN) || roleStr != string(model.ANNOUNCEMENT) {
+		r := &response.FailureResponse{}
+		r.Ok = false
+		r.ErrorMessage = "无法设置权限因为这样的权限参数不存在"
+		ctx.JSON(r)
+		return
+	}
+
+	role := model.RoleType(roleStr)
+	err := service.GetUserService().SetRole(username, role)
+
+	if err != nil {
+		r := &response.FailureResponse{}
+		r.Ok = false
+		r.ErrorMessage = "无法设置权限因为该用户不存在"
+		ctx.JSON(r)
+		return
+	}
+
+	r := &response.SuccessResponse{}
+	r.Ok = true
+	ctx.JSON(r)
+
 	// TODO: implement
 	// 无需获取请求体
 	// 获取路由参数中的 username 和 role(需要从string转化成model.RoleType)
 	// 调用 service 设置权限
 	// 失败返回 response.FailureResponse
 	// 成功返回 response.SuccessResponse
+
 }
 
 // @summary 		删除用户角色
