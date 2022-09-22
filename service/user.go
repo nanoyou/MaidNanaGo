@@ -51,6 +51,7 @@ func (u *UserService) Login(name string, password string) (user *model.User, err
 	if !pwd.FromString(user.HashedPassword).Validate(password) {
 		return nil, errors.New("密码错误")
 	}
+	logrus.WithField("user", name).Debug("登录")
 
 	return user, nil
 }
@@ -130,11 +131,12 @@ func (u *UserService) SetRole(username string, role model.RoleType) error {
 			roles = append(roles, oldRole.Role)
 		}
 	}
+	logrus.WithField("roles", roles).Debug("将要添加权限")
 
 	// 如果包含管理员角色 设置仅设置为管理员
 	for _, oldRole := range roles {
 		if oldRole == model.SUPER_ADMIN {
-			roles = []model.RoleType{role}
+			roles = []model.RoleType{model.SUPER_ADMIN}
 			break
 		}
 	}
