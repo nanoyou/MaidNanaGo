@@ -208,7 +208,7 @@ func (ac *AdminController) DeleteRole(ctx iris.Context) {
 	if err != nil {
 		r := &response.FailureResponse{}
 		r.Ok = false
-		r.ErrorMessage = "无法设置权限因为该用户不存在"
+		r.ErrorMessage = "无法删除权限因为该用户不存在"
 		ctx.JSON(r)
 		return
 	}
