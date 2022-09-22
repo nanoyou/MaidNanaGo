@@ -150,6 +150,7 @@ func (ac *AdminController) SetRole(ctx iris.Context) {
 	if err != nil {
 		r := &response.FailureResponse{}
 		r.Ok = false
+		r.Error = err.Error()
 		r.ErrorMessage = "无法设置权限因为该用户不存在"
 		ctx.JSON(r)
 		return
@@ -158,13 +159,6 @@ func (ac *AdminController) SetRole(ctx iris.Context) {
 	r := &response.SuccessResponse{}
 	r.Ok = true
 	ctx.JSON(r)
-
-	// TODO: implement
-	// 无需获取请求体
-	// 获取路由参数中的 username 和 role(需要从string转化成model.RoleType)
-	// 调用 service 设置权限
-	// 失败返回 response.FailureResponse
-	// 成功返回 response.SuccessResponse
 
 }
 
@@ -178,12 +172,7 @@ func (ac *AdminController) SetRole(ctx iris.Context) {
 // @success 		200	{object} response.SuccessResponse
 // @failure 		200	{object} response.FailureResponse
 func (ac *AdminController) DeleteRole(ctx iris.Context) {
-	// TODO: implement
-	// 无需获取请求体
-	// 获取路由参数中的 username 和 role(需要从string转化成model.RoleType)
-	// 调用 service 取消权限
-	// 失败返回 response.FailureResponse
-	// 成功返回 response.SuccessResponse
+
 	username := ctx.Params().Get("username")
 
 	roleStr := ctx.Params().Get("role")
@@ -208,6 +197,7 @@ func (ac *AdminController) DeleteRole(ctx iris.Context) {
 	if err != nil {
 		r := &response.FailureResponse{}
 		r.Ok = false
+		r.Error = err.Error()
 		r.ErrorMessage = "无法删除权限因为该用户不存在"
 		ctx.JSON(r)
 		return
