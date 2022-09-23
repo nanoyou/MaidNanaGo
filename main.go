@@ -61,10 +61,10 @@ func main() {
 		SPA:       true,
 	})
 
+	// 跨域中间件
+	app.Use(middleware.Cors())
 	api := app.Party("/api")
 	{
-		// 跨域中间件
-		api.Use(middleware.Cors())
 
 		// API 文档
 		swaggerConfig := swagger.Config{
