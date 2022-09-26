@@ -25,7 +25,7 @@ import (
 	"github.com/nanoyou/MaidNanaGo/validator"
 )
 
-//go:embed MaidNanaFrontEnd/dist/*
+//go:embed all:MaidNanaFrontEnd/dist/*
 var frontEndDist embed.FS
 
 // @title       Main Nana API 文档
