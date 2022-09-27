@@ -22,6 +22,8 @@ func Init() {
 
 	db.AutoMigrate(&User{})
 	db.AutoMigrate(&Role{})
+	db.AutoMigrate(&Announcement{})
+	db.AutoMigrate(&Template{})
 }
 
 type BaseModel struct {
@@ -29,3 +31,10 @@ type BaseModel struct {
 	CreatedAt time.Time
 	UpdatedAt time.Time
 }
+
+type Bool int
+
+const (
+	True  Bool = 1
+	False Bool = -1
+)
