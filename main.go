@@ -48,6 +48,9 @@ func main() {
 	// 注入校验器
 	app.Validator = validator.Get()
 
+	// 跨域中间件
+	app.UseRouter(middleware.Cors())
+
 	session := sessions.New(sessions.Config{
 		Cookie:  "MaidNana",
 		Expires: time.Hour * 24 * 7,
@@ -61,8 +64,6 @@ func main() {
 		SPA:       true,
 	})
 
-	// 跨域中间件
-	app.Use(middleware.Cors())
 	api := app.Party("/api")
 	{
 
