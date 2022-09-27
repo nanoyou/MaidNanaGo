@@ -9,6 +9,33 @@ type Template struct {
 	Name       string
 }
 
+// Create 写入数据库
+func (t *Template) Create() error {
+	return db.Create(&t).Error
+}
+
+// GetTemplateById 使用id获取模板
+func GetTemplateById(id uint) (t *Template, err error) {
+	err = db.Preload("Owner").First(&t, id).Error
+	return
+}
+
+// GetAllTemplates 获取所有模板
+func GetAllTemplates() (templates []Template, err error) {
+	err = db.Model(&Template{}).Preload("Owner").Find(&templates).Error
+	return
+}
+
+// Update 将更改存入数据库
+func (t *Template) Update() error {
+	return db.Updates(&t).Error
+}
+
+// Delete 删除模板
+func (t *Template) Delete() error {
+	return db.Delete(&t).Error
+}
+
 type AnnouncementType string
 
 const (
