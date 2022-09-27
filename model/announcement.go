@@ -3,7 +3,8 @@ package model
 type Template struct {
 	BaseModel
 	Visibility VisibilityType
-	Owner      User
+	Owner      User `gorm:"foreignKey:OwnerID"`
+	OwnerID    uint
 	Content    string
 	Name       string
 }
@@ -18,7 +19,8 @@ const (
 type Announcement struct {
 	BaseModel
 	Visibility VisibilityType
-	Owner      User
+	Owner      User `gorm:"foreignKey:OwnerID"`
+	OwnerID    uint
 	Name       string
 	Type       AnnouncementType
 	Groups     []AnnouncementGroup
@@ -27,6 +29,7 @@ type Announcement struct {
 	Variables  []AnnouncementVariable
 	Content    string   // 如为纯文本公告则包含此项
 	Template   Template // 如为模板公告则包含此项
+	TemplateID uint
 }
 
 type AnnouncementGroup struct {
