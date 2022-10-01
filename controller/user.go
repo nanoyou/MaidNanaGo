@@ -108,6 +108,20 @@ func (uc *UserController) Login(ctx iris.Context) {
 	ctx.JSON(r)
 }
 
+// @summary 		用户信息
+// @description	 	查看用户的详细信息
+// @produce 		json
+// @param 			username path string true "用户名"
+// @tags			user
+// @router 			/api/user/{username} [get]
+// @success 		200	{object} response.UserResponse
+// @failure 		200	{object} response.FailureResponse
+func (uc *UserController) GetUser(ctx iris.Context) {
+	// 获取路由参数 username
+	// 调用 service 获取用户
+	// 返回 response.UserResponse
+}
+
 // @summary 		登出
 // @description	 	退出登录
 // @produce 		json

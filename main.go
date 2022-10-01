@@ -96,6 +96,7 @@ func main() {
 		user := api.Party("/user/{username}")
 		{
 			user.Post("/login", userController.Login)
+			user.Get("/", userController.GetUser)
 		}
 
 		admin := api.Party("/admin", superAdmin)
