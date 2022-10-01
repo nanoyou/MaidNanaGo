@@ -1,5 +1,7 @@
 package model
 
+import "github.com/nanoyou/MaidNanaGo/util/slice"
+
 type User struct {
 	BaseModel
 	Name           string `gorm:"unique; not null"`
@@ -77,4 +79,9 @@ func (u *User) SetRole(roles []RoleType) error {
 // Delete 删除角色
 func (r *Role) Delete() error {
 	return db.Delete(&r).Error
+}
+
+// IsSuperAdmin 用户是否为超级管理员
+func (u *User) IsSuperAdmin() bool {
+	return slice.Contains(slice.Map(u.Roles, func(r Role) RoleType { return r.Role }), SUPER_ADMIN)
 }

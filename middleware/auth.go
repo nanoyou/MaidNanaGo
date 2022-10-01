@@ -29,6 +29,7 @@ func getUser(ctx *context.Context) (user *model.User, ok bool) {
 		ctx.StopExecution()
 		return nil, false
 	}
+	ctx.Values().Set("user", user)
 	return user, true
 }
 

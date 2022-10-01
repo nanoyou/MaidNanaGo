@@ -81,14 +81,16 @@ func main() {
 
 		// Controller
 		debugController := new(controller.DebugController)
-		api.Get("/about", debugController.About)
 		userController := new(controller.UserController)
 		adminController := new(controller.AdminController)
+		announcementController := new(controller.AnnouncementController)
 
 		// 中间件
 		needLogin := middleware.Auth()
 		superAdmin := middleware.Role(model.SUPER_ADMIN)
+		announcementAdmin := middleware.Role(model.ANNOUNCEMENT)
 
+		api.Get("/about", debugController.About)
 		api.Post("/logout", needLogin, userController.Logout)
 		api.Post("/user", userController.Register)
 		user := api.Party("/user/{username}")
@@ -106,6 +108,16 @@ func main() {
 				adminUser.Delete("/role/{role}", adminController.DeleteRole)
 			}
 		}
+
+		// announcement := api.Party("/announcement", announcementAdmin)
+		// {
+		// }
+
+		template := api.Party("/template", announcementAdmin)
+		{
+			template.Post("/", announcementController.CreateTemplate)
+		}
+
 	}
 
 	app.Listen(":5277")
