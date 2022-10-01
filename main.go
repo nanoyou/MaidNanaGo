@@ -115,6 +115,7 @@ func main() {
 
 		template := api.Party("/template", announcementAdmin)
 		{
+			template.Get("/", announcementController.TemplateList)
 			template.Post("/", announcementController.CreateTemplate)
 		}
 

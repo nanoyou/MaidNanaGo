@@ -65,3 +65,27 @@ func (ac *AnnouncementController) CreateTemplate(ctx iris.Context) {
 	r.Template = template
 	ctx.JSON(r)
 }
+
+// @summary 		模板列表
+// @description	 	查看用户可见的模板列表, 超级管理员可见所有模板, 公告管理员可看到自己的和所有人可见/编辑的模板
+// @produce 		json
+// @tags			announcement
+// @router 			/api/template [get]
+// @success 		200	{object} response.TemplateListResponse
+// @failure 		200	{object} response.FailureResponse
+func (ac *AnnouncementController) TemplateList(ctx iris.Context) {
+	userLoggedIn := ctx.Values().Get("user").(*model.User)
+	templates, err := service.GetAnnouncementService().GetTemplatesByUser(userLoggedIn)
+	if err != nil {
+		r := &response.FailureResponse{}
+		r.Ok = false
+		r.Error = err.Error()
+		r.ErrorMessage = "获取失败"
+		ctx.JSON(r)
+		return
+	}
+	r := &response.TemplateListResponse{}
+	r.Ok = true
+	r.TemplateList = templates
+	ctx.JSON(r)
+}

@@ -16,3 +16,13 @@ func Map[S any, T any](slice []S, mapper func(S) T) []T {
 	}
 	return r
 }
+
+func Filter[T any](slice []T, filter func(T) bool) []T {
+	r := make([]T, 0)
+	for _, v := range slice {
+		if filter(v) {
+			r = append(r, v)
+		}
+	}
+	return r
+}
