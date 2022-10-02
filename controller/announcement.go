@@ -145,3 +145,18 @@ func (ac *AnnouncementController) GetTemplate(ctx iris.Context) {
 func (ac *AnnouncementController) DeleteTemplate(ctx iris.Context) {
 	// TODO: implement
 }
+
+// @summary 		修改模板
+// @description	 	修改模板信息, 需要公告管理员权限
+// @accept 			json
+// @produce 		json
+// @param			body body request.ModifyTemplateRequest true "修改模板参数"
+// @param 			id path uint true "模板ID"
+// @tags			announcement
+// @router 			/api/template/{id} [put]
+// @success 		200	{object} response.TemplateResponse
+// @failure 		200	{object} response.FailureResponse
+func (ac *AnnouncementController) ModifyTemplate(ctx iris.Context) {
+	// TODO: implement
+	// 参考 controller/admin.go ModifyUser
+}

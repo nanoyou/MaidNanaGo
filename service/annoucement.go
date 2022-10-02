@@ -70,3 +70,9 @@ func (s *AnnouncementService) DeleteTemplate(id uint) error {
 	// TODO: implement
 	return nil
 }
+
+// ModifyTemplate 修改模板信息
+func (s *AnnouncementService) ModifyTemplate(template *model.Template) error {
+	// TODO: implement
+	return nil
+}
