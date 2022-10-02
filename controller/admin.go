@@ -124,7 +124,22 @@ func (ac *AdminController) ModifyUser(ctx iris.Context) {
 // @success 		200	{object} response.SuccessResponse
 // @failure 		200	{object} response.FailureResponse
 func (ac *AdminController) DeleteUser(ctx iris.Context) {
-	// TODO: implement
+	username := ctx.Params().Get("username")
+
+	err := service.GetUserService().DeleteUser(username)
+	if err != nil {
+		r := &response.FailureResponse{}
+		r.Error = err.Error()
+		r.ErrorMessage = "删除失败"
+		r.Ok = false
+		ctx.JSON(r)
+		return
+	}
+
+	r := &response.SuccessResponse{}
+	r.Ok = true
+	r.SuccessMessage = "删除成功"
+	ctx.JSON(r)
 }
 
 // @summary 		设置用户角色

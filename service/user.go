@@ -197,8 +197,11 @@ func (u *UserService) ChangePassword(username string, password string) error {
 }
 
 // DeleteUser 删除用户
-func (u *UserService) DeleteUser(username string) (*model.User, error) {
-	// TODO: implement
+func (u *UserService) DeleteUser(username string) error {
 	// 先获取再删除
-	return nil, nil
+	user, err := model.GetUserByName(username)
+	if err != nil {
+		return errors.New("找不到用户")
+	}
+	return user.Delete()
 }
