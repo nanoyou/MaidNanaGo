@@ -33,7 +33,7 @@ func (ac *AnnouncementController) CreateTemplate(ctx iris.Context) {
 		return
 	}
 	userLoggedIn := ctx.Values().Get("user").(*model.User)
-	if body.Visibility == model.VISIBILITY_SUPER_ADMIN && !userLoggedIn.IsSuperAdmin() {
+	if *body.Visibility == model.VISIBILITY_SUPER_ADMIN && !userLoggedIn.IsSuperAdmin() {
 		// 没有超级管理员权限
 		r := &response.FailureResponse{}
 		r.Ok = false
@@ -41,17 +41,7 @@ func (ac *AnnouncementController) CreateTemplate(ctx iris.Context) {
 		ctx.JSON(r)
 		return
 	}
-	switch body.Visibility {
-	case model.VISIBILITY_EVERYONE_EDIT, model.VISIBILITY_EVERYONE_READ, model.VISIBILITY_PRIVATE, model.VISIBILITY_SUPER_ADMIN:
-		break
-	default:
-		r := &response.FailureResponse{}
-		r.Ok = false
-		r.ErrorMessage = "参数错误"
-		ctx.JSON(r)
-		return
-	}
-	template, err := service.GetAnnouncementService().CreateTemplate(body.Visibility, userLoggedIn, body.Name, body.Content)
+	template, err := service.GetAnnouncementService().CreateTemplate(*body.Visibility, userLoggedIn, body.Name, body.Content)
 	if err != nil {
 		r := &response.FailureResponse{}
 		r.Ok = false
