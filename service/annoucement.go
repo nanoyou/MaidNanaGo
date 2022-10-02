@@ -61,3 +61,9 @@ func (s *AnnouncementService) DeleteTemplate(templateId uint, user *model.User) 
 	}
 	return t.Delete()
 }
+
+// ModifyTemplate 修改模板信息
+func (s *AnnouncementService) ModifyTemplate(template *model.Template) error {
+	// TODO: implement
+	return nil
+}
