@@ -93,13 +93,43 @@ func (ac *AnnouncementController) TemplateList(ctx iris.Context) {
 // @summary 		模板信息
 // @description	 	查看模板的详细信息
 // @produce 		json
-// @param 			id path string true "模板ID"
+// @param 			id path uint true "模板ID"
 // @tags			user
-// @router 			/api/template/{id:int} [get]
+// @router 			/api/template/{id} [get]
 // @success 		200	{object} response.TemplateResponse
 // @failure 		200	{object} response.FailureResponse
 func (ac *AnnouncementController) GetTemplate(ctx iris.Context) {
+
+	// 获取当前登陆的用户
+	userLoggedIn := ctx.Values().Get("user").(*model.User)
+
 	// 获取路由参数 id(GetInt)
+	id, err := ctx.Params().GetUint("id")
+
+	if err != nil {
+		// 如果无法解析这个模板ID
+		r := response.FailureResponse{}
+		r.Error = err.Error()
+		r.ErrorMessage = "模板ID不合法"
+		r.Ok = false
+		ctx.JSON(r)
+		return
+	}
 	// 调用 service 获取模板
+	template, err := service.GetAnnouncementService().GetTemplate(id, userLoggedIn)
+	if err != nil {
+		// 如果无法找到这个模板
+		r := response.FailureResponse{}
+		r.Error = err.Error()
+		r.ErrorMessage = "获取失败"
+		r.Ok = false
+		ctx.JSON(r)
+		return
+	}
+
 	// 返回 response.TemplateResponse
+	r := response.TemplateResponse{}
+	r.Template = template
+	r.Ok = true
+	ctx.JSON(r)
 }

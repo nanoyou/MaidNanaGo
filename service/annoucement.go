@@ -1,6 +1,8 @@
 package service
 
 import (
+	"errors"
+
 	"github.com/nanoyou/MaidNanaGo/model"
 	"github.com/nanoyou/MaidNanaGo/util/slice"
 )
@@ -38,4 +40,27 @@ func (s *AnnouncementService) GetTemplatesByUser(user *model.User) ([]model.Temp
 	return slice.Filter(templates, func(t model.Template) bool {
 		return t.Visibility == model.VISIBILITY_EVERYONE_EDIT || t.Visibility == model.VISIBILITY_EVERYONE_READ || t.OwnerID == user.ID
 	}), nil
+}
+
+// GetTemplate 根据模板ID返回用户可见的模板
+func (s *AnnouncementService) GetTemplate(templateId uint, user *model.User) (*model.Template, error) {
+
+	template, err := model.GetTemplateById(templateId)
+	if err != nil {
+		return nil, err
+	}
+	// 如果用户是超级管理员, 那么直接返回
+	if user.IsSuperAdmin() {
+		return template, nil
+	}
+	// 如果用户是模板拥有者, 那么直接返回
+	if template.OwnerID == user.ID {
+		return template, nil
+	}
+	// 按照 Visibility 返回
+	if template.Visibility == model.VISIBILITY_EVERYONE_EDIT ||
+		template.Visibility == model.VISIBILITY_EVERYONE_READ {
+		return template, nil
+	}
+	return nil, errors.New("权限不足")
 }

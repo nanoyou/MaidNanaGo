@@ -118,7 +118,7 @@ func main() {
 		{
 			template.Get("/", announcementController.TemplateList)
 			template.Post("/", announcementController.CreateTemplate)
-			templateId := template.Party("/{id:int}")
+			templateId := template.Party("/{id:uint}")
 			{
 				templateId.Get("/", announcementController.GetTemplate)
 			}
