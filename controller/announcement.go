@@ -188,4 +188,52 @@ func (ac *AnnouncementController) DeleteTemplate(ctx iris.Context) {
 func (ac *AnnouncementController) ModifyTemplate(ctx iris.Context) {
 	// TODO: implement
 	// 参考 controller/admin.go ModifyUser
+
+	// 获取当前登陆的用户
+	userLoggedIn := ctx.Values().Get("user").(*model.User)
+
+	var body request.ModifyTemplateRequest
+
+	err := ctx.ReadJSON(&body)
+	if err != nil {
+		r := &response.FailureResponse{}
+		r.Ok = false
+		r.Error = err.Error()
+		r.ErrorMessage = "参数错误"
+		ctx.JSON(r)
+		return
+	}
+	//
+	templateId := ctx.Params().GetUintDefault("id", 0)
+	template, err := service.GetAnnouncementService().GetTemplate(templateId, userLoggedIn)
+	if err != nil {
+		r := &response.FailureResponse{}
+		r.Ok = false
+		r.Error = err.Error()
+		r.ErrorMessage = "获取模板失败"
+		ctx.JSON(r)
+		return
+	}
+
+	// TODO: 空值处理
+	template.Content = body.Content
+	template.Name = body.Name
+	template.Visibility = body.Visibility
+
+	err = service.GetAnnouncementService().ModifyTemplate(template)
+	if err != nil {
+		// 修改失败
+		r := &response.FailureResponse{}
+		r.Ok = false
+		r.Error = err.Error()
+		r.ErrorMessage = "修改模板失败"
+		ctx.JSON(r)
+		return
+	}
+	r := &response.TemplateResponse{}
+	r.SuccessMessage = "修改模板成功"
+	r.Template = template
+	r.Ok = true
+	ctx.JSON(r)
+
 }
