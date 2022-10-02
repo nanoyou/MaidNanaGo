@@ -118,8 +118,24 @@ func (uc *UserController) Login(ctx iris.Context) {
 // @failure 		200	{object} response.FailureResponse
 func (uc *UserController) GetUser(ctx iris.Context) {
 	// 获取路由参数 username
+	username := ctx.Params().Get("username")
 	// 调用 service 获取用户
+	user, err := service.GetUserService().GetUser(username)
+	if err != nil {
+		// 获取失败
+		r := &response.FailureResponse{}
+		r.Error = err.Error()
+		r.Ok = false
+		r.ErrorMessage = "获取失败"
+		ctx.JSON(r)
+		return
+	}
+
 	// 返回 response.UserResponse
+	r := &response.UserResponse{}
+	r.Ok = true
+	r.User = user
+	ctx.JSON(r)
 }
 
 // @summary 		登出
