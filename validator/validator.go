@@ -1,6 +1,9 @@
 package validator
 
-import "github.com/go-playground/validator/v10"
+import (
+	"github.com/go-playground/validator/v10"
+	"github.com/nanoyou/MaidNanaGo/model"
+)
 
 var v = validator.New()
 
@@ -24,6 +27,16 @@ func init() {
 			return false
 		}
 		return true
+	})
+	// Visibility
+	v.RegisterValidation("visibility", func(fl validator.FieldLevel) bool {
+		str := fl.Field().String()
+		switch model.VisibilityType(str) {
+		case model.VISIBILITY_EVERYONE_EDIT, model.VISIBILITY_EVERYONE_READ, model.VISIBILITY_PRIVATE, model.VISIBILITY_SUPER_ADMIN:
+			return true
+		default:
+			return false
+		}
 	})
 }
 
