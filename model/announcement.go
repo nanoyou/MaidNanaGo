@@ -1,12 +1,9 @@
 package model
 
 type Template struct {
-	BaseModel
-	Visibility VisibilityType
-	Owner      User `gorm:"foreignKey:OwnerID"`
-	OwnerID    uint
-	Content    string
-	Name       string
+	VisibleModel
+	Content string
+	Name    string
 }
 
 // Create 写入数据库
