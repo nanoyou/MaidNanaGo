@@ -94,7 +94,7 @@ func (ac *AnnouncementController) TemplateList(ctx iris.Context) {
 // @description	 	查看模板的详细信息
 // @produce 		json
 // @param 			id path uint true "模板ID"
-// @tags			user
+// @tags			announcement
 // @router 			/api/template/{id} [get]
 // @success 		200	{object} response.TemplateResponse
 // @failure 		200	{object} response.FailureResponse
