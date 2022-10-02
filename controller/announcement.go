@@ -11,7 +11,7 @@ import (
 type AnnouncementController struct{}
 
 // @summary 		创建模板
-// @description	 	创建一个新的模板
+// @description	 	创建一个新的模板, 需要公告管理员权限
 // @accept 			json
 // @produce 		json
 // @param			body body request.CreateTemplateRequest true "创建模板参数"
@@ -91,7 +91,7 @@ func (ac *AnnouncementController) TemplateList(ctx iris.Context) {
 }
 
 // @summary 		模板信息
-// @description	 	查看模板的详细信息
+// @description	 	查看模板的详细信息, 需要公告管理员权限
 // @produce 		json
 // @param 			id path uint true "模板ID"
 // @tags			announcement
@@ -132,4 +132,16 @@ func (ac *AnnouncementController) GetTemplate(ctx iris.Context) {
 	r.Template = template
 	r.Ok = true
 	ctx.JSON(r)
+}
+
+// @summary 		删除模板
+// @description	 	删除模板, 需要公告管理员权限
+// @produce 		json
+// @param 			id path uint true "模板ID"
+// @tags			announcement
+// @router 			/api/template/{id} [delete]
+// @success 		200	{object} response.SuccessResponse
+// @failure 		200	{object} response.FailureResponse
+func (ac *AnnouncementController) DeleteTemplate(ctx iris.Context) {
+	// TODO: implement
 }

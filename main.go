@@ -122,6 +122,7 @@ func main() {
 			templateId := template.Party("/{id:uint}")
 			{
 				templateId.Get("/", announcementController.GetTemplate)
+				templateId.Delete("/", announcementController.DeleteTemplate)
 			}
 		}
 

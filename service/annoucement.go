@@ -64,3 +64,9 @@ func (s *AnnouncementService) GetTemplate(templateId uint, user *model.User) (*m
 	}
 	return nil, errors.New("权限不足")
 }
+
+// DeleteTemplate 根据模板ID删除模板
+func (s *AnnouncementService) DeleteTemplate(id uint) error {
+	// TODO: implement
+	return nil
+}
