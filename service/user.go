@@ -195,3 +195,10 @@ func (u *UserService) ChangePassword(username string, password string) error {
 	user.HashedPassword = pwd.NewSHA512Password(password).String()
 	return user.Update()
 }
+
+// DeleteUser 删除用户
+func (u *UserService) DeleteUser(username string) (*model.User, error) {
+	// TODO: implement
+	// 先获取再删除
+	return nil, nil
+}

@@ -115,6 +115,18 @@ func (ac *AdminController) ModifyUser(ctx iris.Context) {
 	ctx.JSON(r)
 }
 
+// @summary 		删除用户
+// @description	 	删除指定用户, 需要超级管理员权限
+// @produce 		json
+// @param 			username path string true "用户名"
+// @tags			admin, user
+// @router 			/api/admin/user/{username} [delete]
+// @success 		200	{object} response.SuccessResponse
+// @failure 		200	{object} response.FailureResponse
+func (ac *AdminController) DeleteUser(ctx iris.Context) {
+	// TODO: implement
+}
+
 // @summary 		设置用户角色
 // @description	 	设置用户的角色, 若已拥有仍返回成功, 需要管理员权限
 // @produce 		json

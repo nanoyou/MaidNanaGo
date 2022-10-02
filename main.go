@@ -105,6 +105,7 @@ func main() {
 			adminUser := admin.Party("/user/{username}")
 			{
 				adminUser.Put("/", adminController.ModifyUser)
+				adminUser.Delete("/", adminController.DeleteUser)
 				adminUser.Put("/role/{role}", adminController.SetRole)
 				adminUser.Delete("/role/{role}", adminController.DeleteRole)
 			}
