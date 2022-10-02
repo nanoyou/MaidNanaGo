@@ -51,11 +51,13 @@ func (s *AnnouncementService) GetTemplate(templateId uint, user *model.User) (*m
 }
 
 // DeleteTemplate 根据模板ID删除模板
-func (s *AnnouncementService) DeleteTemplate(id uint) error {
-	t, err := model.GetTemplateById(id)
+func (s *AnnouncementService) DeleteTemplate(templateId uint, user *model.User) error {
+	t, err := model.GetTemplateById(templateId)
 	if err != nil {
 		return errors.New("找不到模板")
 	}
-
+	if !t.IsDeletable(user) {
+		return errors.New("权限不足")
+	}
 	return t.Delete()
 }

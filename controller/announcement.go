@@ -143,5 +143,34 @@ func (ac *AnnouncementController) GetTemplate(ctx iris.Context) {
 // @success 		200	{object} response.SuccessResponse
 // @failure 		200	{object} response.FailureResponse
 func (ac *AnnouncementController) DeleteTemplate(ctx iris.Context) {
-	// TODO: implement
+
+	// 获取当前登陆的用户
+	userLoggedIn := ctx.Values().Get("user").(*model.User)
+
+	id, err := ctx.Params().GetUint("id")
+	if err != nil {
+		// 解析参数失败
+		r := &response.FailureResponse{}
+		r.Error = err.Error()
+		r.ErrorMessage = "参数无效"
+		r.Ok = false
+		ctx.JSON(r)
+		return
+	}
+
+	err = service.GetAnnouncementService().DeleteTemplate(id, userLoggedIn)
+	if err != nil {
+		r := &response.FailureResponse{}
+		r.Error = err.Error()
+		r.ErrorMessage = "删除模板失败"
+		r.Ok = false
+		ctx.JSON(r)
+		return
+	}
+
+	r := &response.SuccessResponse{}
+	r.SuccessMessage = "成功删除模板"
+	r.Ok = true
+	ctx.JSON(r)
+
 }
