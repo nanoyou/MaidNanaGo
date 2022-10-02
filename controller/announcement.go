@@ -89,3 +89,17 @@ func (ac *AnnouncementController) TemplateList(ctx iris.Context) {
 	r.TemplateList = templates
 	ctx.JSON(r)
 }
+
+// @summary 		模板信息
+// @description	 	查看模板的详细信息
+// @produce 		json
+// @param 			id path string true "模板ID"
+// @tags			user
+// @router 			/api/template/{id:int} [get]
+// @success 		200	{object} response.TemplateResponse
+// @failure 		200	{object} response.FailureResponse
+func (ac *AnnouncementController) GetTemplate(ctx iris.Context) {
+	// 获取路由参数 id(GetInt)
+	// 调用 service 获取模板
+	// 返回 response.TemplateResponse
+}
