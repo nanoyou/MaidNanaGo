@@ -3,7 +3,9 @@ package bytes
 import "encoding/binary"
 
 func Int64ToBytes(num int64) []byte {
-	return binary.LittleEndian.AppendUint64([]byte{}, uint64(num))
+	r := []byte{}
+	binary.LittleEndian.PutUint64(r, uint64(num))
+	return r
 }
 
 func BytesToInt64(b []byte) int64 {
