@@ -1,4 +1,5 @@
 FROM alpine
+EXPOSE 5277
 RUN apk add --no-cache wget ffmpeg git go npm openssh
 
 VOLUME [ "/usr/local/maidnana/go-cqhttp", "/usr/local/maidnana/MaidNanaGo" ]
