@@ -36,3 +36,21 @@ const (
 	SubTypeGroup  SubType = "group"
 	SubTypePublic         = "public"
 )
+
+type RequestEvent struct {
+	Event
+	// 请求类型
+	RequestType PostType `json:"request_type"`
+}
+
+type NoticeEvent struct {
+	Event
+	// 通知类型
+	NoticeType PostType `json:"notice_type"`
+}
+
+type MetaEventType struct {
+	Event
+	// 元数据类型
+	MetaEventType PostType `json:"meta_event_type"`
+}
