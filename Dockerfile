@@ -1,6 +1,6 @@
 FROM alpine
 EXPOSE 5277
-RUN apk add --no-cache wget ffmpeg git go npm openssh
+RUN apk add --no-cache wget ffmpeg git go npm openssh supervisor
 
 VOLUME [ "/usr/local/maidnana/go-cqhttp", "/usr/local/maidnana/MaidNanaGo" ]
 WORKDIR /usr/local/maidnana/go-cqhttp
@@ -18,4 +18,6 @@ WORKDIR /usr/local/maidnana/src/MaidNanaGo
 RUN export GOPATH=/usr/lib/go && go install github.com/swaggo/swag/cmd/swag@latest
 RUN /usr/lib/go/bin/swag init && go build -o /usr/local/maidnana/MaidNanaGo/MaidNanaGo
 
-CMD cd /usr/local/maidnana/go-cqhttp && echo 02 > ./go-cqhttp & cd /usr/local/maidnana/MaidNanaGo && ./MaidNanaGo
+COPY supervisord.conf /etc/supervisord.conf
+
+CMD supervisord -c /etc/supervisord.conf
