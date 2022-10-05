@@ -1,5 +1,6 @@
 package mirai
 
+// 所有上报
 type Event struct {
 	Time     int64    `json:"time"`
 	SelfID   int64    `json:"self_id"`
@@ -15,6 +16,7 @@ const (
 	PostTypeMetaEvent          = "meta_event"
 )
 
+// 消息上报
 type MessageEvent struct {
 	Event
 	SubType   SubType `json:"sub_type"`
@@ -37,20 +39,26 @@ const (
 	SubTypePublic         = "public"
 )
 
+// 请求上报
 type RequestEvent struct {
 	Event
 	// 请求类型
 	RequestType PostType `json:"request_type"`
 }
 
+// 通知上报
 type NoticeEvent struct {
 	Event
 	// 通知类型
 	NoticeType PostType `json:"notice_type"`
 }
 
+// 元事件上报
 type MetaEventType struct {
 	Event
 	// 元数据类型
 	MetaEventType PostType `json:"meta_event_type"`
+}
+
+type PrivateMessage struct {
 }
