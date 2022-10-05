@@ -1,6 +1,6 @@
 module github.com/nanoyou/MaidNanaGo
 
-go 1.19
+go 1.18
 
 require github.com/iris-contrib/swagger v0.0.0-20220312201355-d237eb548d02
 
