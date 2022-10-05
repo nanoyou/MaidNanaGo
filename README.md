@@ -20,7 +20,7 @@ npm run build
 ```
 
 ## 第三方库
-- [MiraiGo-Template](https://github.com/Logiase/MiraiGo-Template) QQ机器人
+- [MiraiGo-Template](https://github.com/Logiase/MiraiGo-Template) QQ机器人(弃用)
 - [Viper](https://github.com/spf13/viper) 配置文件管理
 - [Logrus](https://github.com/sirupsen/logrus) 日志管理
 - [Cron](https://github.com/robfig/cron) 定时任务
@@ -29,3 +29,4 @@ npm run build
 - [Gorm](https://gorm.io/docs/)
 - [Validator](https://github.com/go-playground/validator) 参数校验
 - [FreeCache](https://github.com/coocood/freecache) 缓存
+- [Gorilla WebSocket](https://github.com/gorilla/websocket) Websocket客户端
