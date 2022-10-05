@@ -12,4 +12,9 @@ func TestBytes(t *testing.T) {
 	if bytes.BytesToInt64(arr) != number {
 		t.Error("不相等")
 	}
+	number = 9223372036854775807
+	arr = bytes.Int64ToBytes(number)
+	if bytes.BytesToInt64(arr) != number {
+		t.Error("不相等")
+	}
 }
