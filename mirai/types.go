@@ -54,7 +54,26 @@ const (
 	SexUnknown Sex = "unknown"
 )
 
-// https://docs.go-cqhttp.org/event/#%E6%B6%88%E6%81%AF%E4%B8%8A%E6%8A%A5
+type PrivateMessageSender MessageSender
+
+type GroupMessageSender struct {
+	MessageSender
+	// 群名片／备注
+	Card  string `json:"card"`
+	Area  string `json:"area"`
+	Level string `json:"level"`
+	// 角色, owner 或 admin 或 member
+	Role  Role   `json:"role"`
+	Title string `json:"title"`
+}
+
+type Role string
+
+const (
+	Owner  Role = "owner"
+	Admin  Role = "admin"
+	Member Role = "member"
+)
 
 type SubType string
 
@@ -128,3 +147,6 @@ type Anonymous struct {
 	// 匿名用户 flag, 在调用禁言 API 时需要传入
 	Flag string `json:"flag"`
 }
+
+// 参考网址
+// https://docs.go-cqhttp.org/event/#%E6%B6%88%E6%81%AF%E4%B8%8A%E6%8A%A5
