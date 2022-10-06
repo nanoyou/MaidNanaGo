@@ -59,11 +59,14 @@ type PrivateMessageSender MessageSender
 type GroupMessageSender struct {
 	MessageSender
 	// 群名片／备注
-	Card  string `json:"card"`
-	Area  string `json:"area"`
+	Card string `json:"card"`
+	// 地区
+	Area string `json:"area"`
+	// 成员等级
 	Level string `json:"level"`
 	// 角色, owner 或 admin 或 member
-	Role  Role   `json:"role"`
+	Role Role `json:"role"`
+	// 专属头衔
 	Title string `json:"title"`
 }
 
