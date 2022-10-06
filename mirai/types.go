@@ -11,9 +11,9 @@ type PostType string
 
 const (
 	PostTypeMessage   PostType = "message"
-	PostTypeRequest            = "request"
-	PostTypeNotice             = "notice"
-	PostTypeMetaEvent          = "meta_event"
+	PostTypeRequest   PostType = "request"
+	PostTypeNotice    PostType = "notice"
+	PostTypeMetaEvent PostType = "meta_event"
 )
 
 // 消息上报
@@ -43,7 +43,7 @@ type SubType string
 
 const (
 	SubTypeGroup  SubType = "group"
-	SubTypePublic         = "public"
+	SubTypePublic SubType = "public"
 )
 
 // 请求上报
@@ -82,3 +82,8 @@ type PrivateMessage struct {
 }
 
 type MessageType string
+
+const (
+	MessageTypePrivate MessageType = "private"
+	MessageTypeGroup   MessageType = "group"
+)
