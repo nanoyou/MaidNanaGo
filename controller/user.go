@@ -6,6 +6,7 @@ import (
 	"github.com/nanoyou/MaidNanaGo/controller/request"
 	"github.com/nanoyou/MaidNanaGo/controller/response"
 	"github.com/nanoyou/MaidNanaGo/service"
+	"github.com/sirupsen/logrus"
 )
 
 type UserController struct{}
@@ -101,6 +102,7 @@ func (uc *UserController) Login(ctx iris.Context) {
 	// 写入 session
 	session := sessions.Get(ctx)
 	session.Set("user", user.Name)
+	logrus.WithField("session", session.GetAll()).Debug("session")
 
 	r := &response.UserResponse{}
 	r.Ok = true

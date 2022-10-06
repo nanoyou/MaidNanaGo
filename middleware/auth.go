@@ -6,12 +6,14 @@ import (
 	"github.com/kataras/iris/v12/sessions"
 	"github.com/nanoyou/MaidNanaGo/model"
 	"github.com/nanoyou/MaidNanaGo/util/slice"
+	"github.com/sirupsen/logrus"
 )
 
 func getUser(ctx *context.Context) (user *model.User, ok bool) {
 	session := sessions.Get(ctx)
 	username := session.GetString("user")
 	if username == "" {
+		logrus.WithField("session", session.GetAll()).Debug("session")
 		ctx.JSON(iris.Map{
 			"ok":            false,
 			"error_message": "尚未登录",

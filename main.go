@@ -84,6 +84,7 @@ func main() {
 		userController := new(controller.UserController)
 		adminController := new(controller.AdminController)
 		announcementController := new(controller.AnnouncementController)
+		miraiController := new(controller.MiraiController)
 
 		// 中间件
 		needLogin := middleware.Auth()
@@ -108,6 +109,10 @@ func main() {
 				adminUser.Delete("/", adminController.DeleteUser)
 				adminUser.Put("/role/{role}", adminController.SetRole)
 				adminUser.Delete("/role/{role}", adminController.DeleteRole)
+			}
+			mirai := admin.Party("/mirai")
+			{
+				mirai.Post("/voice/qq/{qq:int64}", miraiController.SendPrivateVoice)
 			}
 		}
 
