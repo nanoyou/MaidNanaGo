@@ -41,7 +41,7 @@ type MessageSender struct {
 	// 昵称
 	Nickname string `json:"nickname"`
 	// 性别, male 或 female 或 unknown
-	Sex string `json:"sex"`
+	Sex Sex `json:"sex"`
 	// 年龄
 	Age int32 `json:"age"`
 }
