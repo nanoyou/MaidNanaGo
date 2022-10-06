@@ -35,7 +35,16 @@ type Message any
 // 需要注意的是, sender 中的各字段是尽最大努力提供的,
 // 也就是说, 不保证每个字段都一定存在,
 // 也不保证存在的字段都是完全正确的(缓存可能过期).
-type MessageSender any
+type MessageSender struct {
+	// 发送者 QQ 号
+	UserID int64 `json:"user_id"`
+	// 昵称
+	Nickname string `json:"nickname"`
+	// 性别, male 或 female 或 unknown
+	Sex string `json:"sex"`
+	// 年龄
+	Age int32 `json:"age"`
+}
 
 // https://docs.go-cqhttp.org/event/#%E6%B6%88%E6%81%AF%E4%B8%8A%E6%8A%A5
 
