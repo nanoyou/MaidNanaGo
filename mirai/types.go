@@ -46,6 +46,14 @@ type MessageSender struct {
 	Age int32 `json:"age"`
 }
 
+type Sex string
+
+const (
+	SexMale    Sex = "male"
+	SexFemale  Sex = "female"
+	SexUnknown Sex = "unknown"
+)
+
 // https://docs.go-cqhttp.org/event/#%E6%B6%88%E6%81%AF%E4%B8%8A%E6%8A%A5
 
 type SubType string
