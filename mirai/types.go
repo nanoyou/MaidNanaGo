@@ -113,11 +113,6 @@ type PrivateMessage struct {
 	MessageType  MessageType  `json:"message_type"`
 	MessageEvent MessageEvent `json:"message_event"`
 	TempSource   int          `json:"temp_source"`
-
-	// 快速操作
-	Reply Message `json:"reply"`
-	// 消息内容是否作为纯文本发送 ( 即不解析 CQ 码 ) , 只在 reply 字段是字符串时有效
-	AutoEscape bool `json:"auto_escape"`
 }
 
 type MessageType string
