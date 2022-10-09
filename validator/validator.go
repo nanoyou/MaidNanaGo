@@ -3,6 +3,7 @@ package validator
 import (
 	"github.com/go-playground/validator/v10"
 	"github.com/nanoyou/MaidNanaGo/model"
+	"github.com/robfig/cron/v3"
 )
 
 var v = validator.New()
@@ -40,6 +41,18 @@ func init() {
 	})
 	v.RegisterValidation("cron", func(fl validator.FieldLevel) bool {
 		// TODO: implement
+		if !fl.Field().CanInterface() {
+			return false
+		}
+		crons, ok := fl.Field().Interface().([]string)
+		if !ok {
+			return false
+		}
+		for _, c := range crons {
+			if _, err := cron.ParseStandard(c); err != nil {
+				return false
+			}
+		}
 		return true
 	})
 }
