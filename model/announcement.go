@@ -90,7 +90,7 @@ func GetAnnouncementById(id uint) (a *Announcement, err error) {
 
 // GetAllAnnouncements 获取所有公告
 func GetAllAnnouncements() (announcements []Announcement, err error) {
-	err = db.Model(&Template{}).
+	err = db.Model(&Announcement{}).
 		Preload("Owner").
 		Preload("Groups").
 		Preload("Crons").

@@ -382,3 +382,27 @@ func (ac *AnnouncementController) CreateTemplateAnnouncement(ctx iris.Context) {
 	r.Announcement = announcement
 	ctx.JSON(r)
 }
+
+// @summary 		公告列表
+// @description	 	查看用户可见的公告列表, 超级管理员可见所有公告, 公告管理员可看到自己的和所有人可见/编辑的公告
+// @produce 		json
+// @tags			announcement
+// @router 			/api/announcement [get]
+// @success 		200	{object} response.AnnouncementListResponse
+// @failure 		200	{object} response.FailureResponse
+func (ac *AnnouncementController) AnnouncementList(ctx iris.Context) {
+	userLoggedIn := ctx.Values().Get("user").(*model.User)
+	announcements, err := service.GetAnnouncementService().GetAnnouncementsByUser(userLoggedIn)
+	if err != nil {
+		r := &response.FailureResponse{}
+		r.Ok = false
+		r.Error = err.Error()
+		r.ErrorMessage = "获取失败"
+		ctx.JSON(r)
+		return
+	}
+	r := &response.AnnouncementListResponse{}
+	r.Ok = true
+	r.AnnouncementList = announcements
+	ctx.JSON(r)
+}

@@ -16,3 +16,8 @@ type AnnouncementResponse struct {
 	SuccessResponse
 	Announcement *model.Announcement
 }
+
+type AnnouncementListResponse struct {
+	SuccessResponse
+	AnnouncementList []model.Announcement
+}
