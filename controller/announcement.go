@@ -258,12 +258,93 @@ func (ac *AnnouncementController) CreatePlainAnnouncement(ctx iris.Context) {
 
 	announcement := &model.Announcement{
 
-		Name:      body.Name,
-		Type:      model.ANN_PLAIN_TEXT,
-		Groups:    make([]model.AnnouncementGroup, 0),
-		Crons:     make([]model.AnnouncementCron, 0),
-		Variables: make([]model.AnnouncementVariable, 0),
-		Content:   body.Content,
+		Name:    body.Name,
+		Type:    model.ANN_PLAIN_TEXT,
+		Groups:  make([]model.AnnouncementGroup, 0),
+		Crons:   make([]model.AnnouncementCron, 0),
+		Content: body.Content,
+	}
+
+	announcement.OwnerID = userLoggedIn.ID
+	announcement.Visibility = body.Visibility
+
+	for _, group := range body.Groups {
+		announcement.Groups = append(announcement.Groups, model.AnnouncementGroup{Group: group})
+
+	}
+
+	for _, cron := range body.Crons {
+		announcement.Crons = append(announcement.Crons, model.AnnouncementCron{Cron: cron})
+	}
+
+	announcement, err = service.GetAnnouncementService().CreatePlainAnnouncement(announcement)
+
+	if err != nil {
+		r := &response.FailureResponse{}
+		r.Ok = false
+		r.Error = err.Error()
+		r.ErrorMessage = "创建失败"
+		ctx.JSON(r)
+		return
+	}
+
+	r := &response.AnnouncementResponse{}
+	r.Ok = true
+	r.Announcement = announcement
+	ctx.JSON(r)
+}
+
+// @summary 		创建模板公告
+// @description	 	创建一个新的模板公告, 需要公告管理员权限
+// @accept 			json
+// @produce 		json
+// @param			body body request.CreateTemplateAnnouncementRequest true "创建模板公告参数"
+// @tags			announcement
+// @router 			/api/announcement/template [post]
+// @success 		200	{object} response.AnnouncementResponse
+// @failure 		200	{object} response.FailureResponse
+func (ac *AnnouncementController) CreateTemplateAnnouncement(ctx iris.Context) {
+	// 读取 http 参数体
+	var body request.CreateTemplateAnnouncementRequest
+	err := ctx.ReadJSON(&body)
+	if err != nil {
+		// 参数不合法
+		r := &response.FailureResponse{}
+		r.Ok = false
+		r.Error = err.Error()
+		r.ErrorMessage = "参数错误"
+		ctx.JSON(r)
+		return
+	}
+	userLoggedIn := ctx.Values().Get("user").(*model.User)
+	if body.Visibility == model.VISIBILITY_SUPER_ADMIN && !userLoggedIn.IsSuperAdmin() {
+		// 没有超级管理员权限
+		r := &response.FailureResponse{}
+		r.Ok = false
+		r.ErrorMessage = "无权限创建超级管理员公告"
+		ctx.JSON(r)
+		return
+	}
+
+	_, err = service.GetAnnouncementService().GetTemplate(body.TemplateID, userLoggedIn)
+
+	if err != nil {
+		r := &response.FailureResponse{}
+		r.Ok = false
+		r.Error = err.Error()
+		r.ErrorMessage = "无法访问该模板"
+		ctx.JSON(r)
+		return
+	}
+
+	announcement := &model.Announcement{
+
+		Name:       body.Name,
+		Type:       model.ANN_PLAIN_TEXT,
+		Groups:     make([]model.AnnouncementGroup, 0),
+		Crons:      make([]model.AnnouncementCron, 0),
+		Variables:  make([]model.AnnouncementVariable, 0),
+		TemplateID: body.TemplateID,
 	}
 
 	announcement.OwnerID = userLoggedIn.ID
@@ -285,7 +366,7 @@ func (ac *AnnouncementController) CreatePlainAnnouncement(ctx iris.Context) {
 		})
 	}
 
-	announcement, err = service.GetAnnouncementService().CreatePlainAnnouncement(announcement)
+	announcement, err = service.GetAnnouncementService().CreateTemplateAnnouncement(announcement)
 
 	if err != nil {
 		r := &response.FailureResponse{}

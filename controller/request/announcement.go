@@ -19,6 +19,14 @@ type CreatePlainAnnouncementRequest struct {
 	Name       string               `validate:"required,max=20"`
 	Groups     []int64
 	Crons      []string `validate:"cron"`
-	Variables  map[string]string
 	Content    string
+}
+
+type CreateTemplateAnnouncementRequest struct {
+	Visibility model.VisibilityType `validate:"required,visibility"`
+	Name       string               `validate:"required,max=20"`
+	Groups     []int64
+	Crons      []string `validate:"cron"`
+	Variables  map[string]string
+	TemplateID uint `validate:"required"`
 }

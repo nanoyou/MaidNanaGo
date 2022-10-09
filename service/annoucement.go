@@ -74,6 +74,16 @@ func (s *AnnouncementService) ModifyTemplate(template *model.Template, user *mod
 func (s *AnnouncementService) CreatePlainAnnouncement(announcement *model.Announcement) (*model.Announcement, error) {
 	announcement.Type = model.ANN_PLAIN_TEXT
 	announcement.TemplateID = 0
+	announcement.Variables = nil
+	if err := announcement.Create(); err != nil {
+		return nil, err
+	}
+	return announcement, nil
+}
+
+func (s *AnnouncementService) CreateTemplateAnnouncement(announcement *model.Announcement) (*model.Announcement, error) {
+	announcement.Type = model.ANN_TEMPLATE
+	announcement.Content = ""
 	if err := announcement.Create(); err != nil {
 		return nil, err
 	}

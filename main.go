@@ -119,6 +119,7 @@ func main() {
 		announcement := api.Party("/announcement", announcementAdmin)
 		{
 			announcement.Post("/plain", announcementController.CreatePlainAnnouncement)
+			announcement.Post("/template", announcementController.CreateTemplateAnnouncement)
 		}
 
 		template := api.Party("/template", announcementAdmin)
