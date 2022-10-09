@@ -492,3 +492,77 @@ func (ac *AnnouncementController) DeleteAnnoucement(ctx iris.Context) {
 	ctx.JSON(r)
 
 }
+
+// @summary 		修改公告
+// @description	 	修改公告信息, 需要公告管理员权限
+// @accept 			json
+// @produce 		json
+// @param			body body request.ModifyAnnoucementRequest true "修改公告参数"
+// @param 			id path uint true "公告ID"
+// @tags			announcement
+// @router 			/api/announcement/{id} [put]
+// @success 		200	{object} response.AnnouncementResponse
+// @failure 		200	{object} response.FailureResponse
+// TODO: NOT YET IMPLEMENTED
+func (ac *AnnouncementController) ModifyAnnoucement(ctx iris.Context) {
+	// 获取当前登陆的用户
+	userLoggedIn := ctx.Values().Get("user").(*model.User)
+
+	var body request.ModifyAnnoucementRequest
+
+	err := ctx.ReadJSON(&body)
+	if err != nil {
+		r := &response.FailureResponse{}
+		r.Ok = false
+		r.Error = err.Error()
+		r.ErrorMessage = "参数错误"
+		ctx.JSON(r)
+		return
+	}
+	//
+	announcementId := ctx.Params().GetUintDefault("id", 0)
+	announcement, err := service.GetAnnouncementService().GetAnnouncement(announcementId, userLoggedIn)
+	if err != nil {
+		r := &response.FailureResponse{}
+		r.Ok = false
+		r.Error = err.Error()
+		r.ErrorMessage = "获取公告失败"
+		ctx.JSON(r)
+		return
+	}
+
+	announcement.Name = body.Name
+	announcement.Enabled = body.Enabled
+
+	if announcement.Type == model.ANN_PLAIN_TEXT {
+		announcement.Content = body.Content
+		announcement.TemplateID = 0
+	} else if announcement.Type == model.ANN_PLAIN_TEXT {
+		announcement.Content = ""
+		announcement.TemplateID = body.TemplateID
+	} else {
+		// 参数错误
+		r := &response.FailureResponse{}
+		r.Ok = false
+		r.ErrorMessage = "参数错误"
+		ctx.JSON(r)
+		return
+	}
+
+	err = service.GetAnnouncementService().ModifyAnnoucement(announcement, userLoggedIn)
+	if err != nil {
+		// 修改失败
+		r := &response.FailureResponse{}
+		r.Ok = false
+		r.Error = err.Error()
+		r.ErrorMessage = "修改公告失败"
+		ctx.JSON(r)
+		return
+	}
+	r := &response.AnnouncementResponse{}
+	r.SuccessMessage = "修改公告成功"
+	r.Announcement = announcement
+	r.Ok = true
+	ctx.JSON(r)
+
+}
