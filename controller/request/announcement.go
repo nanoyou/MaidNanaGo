@@ -30,3 +30,12 @@ type CreateTemplateAnnouncementRequest struct {
 	Variables  map[string]string
 	TemplateID uint `validate:"required"`
 }
+
+type ModifyAnnoucementRequest struct {
+	Visibility model.VisibilityType `validate:"len=0|visibility"`
+	Name       string               `validate:"max=20"`
+	Enabled    model.Bool           `validate:"mybool"`
+	Type       model.AnnouncementType
+	Content    string `validate:"max=1000"`
+	TemplateID uint
+}
