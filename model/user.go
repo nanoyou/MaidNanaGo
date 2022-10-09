@@ -59,7 +59,7 @@ func (u *User) Update() error {
 
 // Delete 删除用户
 func (u *User) Delete() error {
-	return db.Delete(&u).Error
+	return db.Select("Roles").Delete(&u).Error
 }
 
 // SetRole 添加角色
