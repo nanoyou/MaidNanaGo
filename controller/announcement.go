@@ -537,7 +537,7 @@ func (ac *AnnouncementController) ModifyAnnoucement(ctx iris.Context) {
 	if announcement.Type == model.ANN_PLAIN_TEXT {
 		announcement.Content = body.Content
 		announcement.TemplateID = 0
-	} else if announcement.Type == model.ANN_PLAIN_TEXT {
+	} else if announcement.Type == model.ANN_TEMPLATE {
 		announcement.Content = ""
 		announcement.TemplateID = body.TemplateID
 	} else {
