@@ -459,6 +459,7 @@ func (ac *AnnouncementController) GetAnnouncement(ctx iris.Context) {
 // @router 			/api/announcement/{id} [delete]
 // @success 		200	{object} response.SuccessResponse
 // @failure 		200	{object} response.FailureResponse
+// TODO: NOT YET TESTED
 func (ac *AnnouncementController) DeleteAnnoucement(ctx iris.Context) {
 
 	// 获取当前登陆的用户
