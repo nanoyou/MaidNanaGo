@@ -103,3 +103,16 @@ func (s *AnnouncementService) GetAnnouncementsByUser(user *model.User) ([]model.
 		return a.IsVisible(user)
 	}), nil
 }
+
+// GetAnnouncement 根据模板ID返回用户可见的模板
+func (s *AnnouncementService) GetAnnouncement(announcementID uint, user *model.User) (*model.Announcement, error) {
+
+	announcement, err := model.GetAnnouncementById(announcementID)
+	if err != nil {
+		return nil, err
+	}
+	if announcement.IsVisible(user) {
+		return announcement, nil
+	}
+	return nil, errors.New("权限不足")
+}

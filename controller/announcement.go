@@ -406,3 +406,47 @@ func (ac *AnnouncementController) AnnouncementList(ctx iris.Context) {
 	r.AnnouncementList = announcements
 	ctx.JSON(r)
 }
+
+// @summary 		公告信息
+// @description	 	查看公告的详细信息, 需要公告管理员权限
+// @produce 		json
+// @param 			id path uint true "公告ID"
+// @tags			announcement
+// @router 			/api/announcement/{id} [get]
+// @success 		200	{object} response.AnnouncementResponse
+// @failure 		200	{object} response.FailureResponse
+func (ac *AnnouncementController) GetAnnouncement(ctx iris.Context) {
+
+	// 获取当前登陆的用户
+	userLoggedIn := ctx.Values().Get("user").(*model.User)
+
+	// 获取路由参数 id(GetInt)
+	id, err := ctx.Params().GetUint("id")
+
+	if err != nil {
+		// 如果无法解析这个公告ID
+		r := response.FailureResponse{}
+		r.Error = err.Error()
+		r.ErrorMessage = "公告ID不合法"
+		r.Ok = false
+		ctx.JSON(r)
+		return
+	}
+	// 调用 service 获取公告
+	annoucement, err := service.GetAnnouncementService().GetAnnouncement(id, userLoggedIn)
+	if err != nil {
+		// 如果无法找到这个公告
+		r := response.FailureResponse{}
+		r.Error = err.Error()
+		r.ErrorMessage = "获取失败"
+		r.Ok = false
+		ctx.JSON(r)
+		return
+	}
+
+	// 返回 response.AnnouncementResponse
+	r := response.AnnouncementResponse{}
+	r.Announcement = annoucement
+	r.Ok = true
+	ctx.JSON(r)
+}
