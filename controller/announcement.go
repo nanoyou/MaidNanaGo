@@ -450,3 +450,44 @@ func (ac *AnnouncementController) GetAnnouncement(ctx iris.Context) {
 	r.Ok = true
 	ctx.JSON(r)
 }
+
+// @summary 		删除公告
+// @description	 	删除公告, 需要公告管理员权限
+// @produce 		json
+// @param 			id path uint true "公告ID"
+// @tags			announcement
+// @router 			/api/announcement/{id} [delete]
+// @success 		200	{object} response.SuccessResponse
+// @failure 		200	{object} response.FailureResponse
+func (ac *AnnouncementController) DeleteAnnoucement(ctx iris.Context) {
+
+	// 获取当前登陆的用户
+	userLoggedIn := ctx.Values().Get("user").(*model.User)
+
+	id, err := ctx.Params().GetUint("id")
+	if err != nil {
+		// 解析参数失败
+		r := &response.FailureResponse{}
+		r.Error = err.Error()
+		r.ErrorMessage = "参数无效"
+		r.Ok = false
+		ctx.JSON(r)
+		return
+	}
+
+	err = service.GetAnnouncementService().DeleteAnnoucement(id, userLoggedIn)
+	if err != nil {
+		r := &response.FailureResponse{}
+		r.Error = err.Error()
+		r.ErrorMessage = "删除公告失败"
+		r.Ok = false
+		ctx.JSON(r)
+		return
+	}
+
+	r := &response.SuccessResponse{}
+	r.SuccessMessage = "成功删除公告"
+	r.Ok = true
+	ctx.JSON(r)
+
+}
