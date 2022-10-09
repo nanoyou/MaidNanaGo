@@ -116,3 +116,15 @@ func (s *AnnouncementService) GetAnnouncement(announcementID uint, user *model.U
 	}
 	return nil, errors.New("权限不足")
 }
+
+// DeleteAnnoucement 根据公告ID删除公告
+func (s *AnnouncementService) DeleteAnnoucement(announcementId uint, user *model.User) error {
+	a, err := model.GetAnnouncementById(announcementId)
+	if err != nil {
+		return errors.New("找不到公告")
+	}
+	if !a.IsDeletable(user) {
+		return errors.New("权限不足")
+	}
+	return a.Delete()
+}
