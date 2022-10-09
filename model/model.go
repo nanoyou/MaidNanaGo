@@ -20,10 +20,14 @@ func Init() {
 	}
 	db.Logger = new(logger.VoidLogger)
 
-	db.AutoMigrate(&User{})
-	db.AutoMigrate(&Role{})
-	db.AutoMigrate(&Announcement{})
-	db.AutoMigrate(&Template{})
+	db.AutoMigrate(&User{},
+		&Role{},
+		&Announcement{},
+		&Template{},
+		&AnnouncementCron{},
+		&AnnouncementVariable{},
+		&AnnouncementGroup{},
+	)
 }
 
 type BaseModel struct {
