@@ -206,7 +206,7 @@ func (ac *AnnouncementController) ModifyTemplate(ctx iris.Context) {
 	template.Name = body.Name
 	template.Visibility = body.Visibility
 
-	err = service.GetAnnouncementService().ModifyTemplate(template)
+	err = service.GetAnnouncementService().ModifyTemplate(template, userLoggedIn)
 	if err != nil {
 		// 修改失败
 		r := &response.FailureResponse{}

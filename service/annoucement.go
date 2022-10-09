@@ -63,7 +63,9 @@ func (s *AnnouncementService) DeleteTemplate(templateId uint, user *model.User) 
 }
 
 // ModifyTemplate 修改模板信息
-func (s *AnnouncementService) ModifyTemplate(template *model.Template) error {
-	// TODO: implement
-	return nil
+func (s *AnnouncementService) ModifyTemplate(template *model.Template, user *model.User) error {
+	if !template.IsEditable(user) {
+		return errors.New("权限不足")
+	}
+	return template.Update()
 }
