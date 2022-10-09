@@ -223,3 +223,81 @@ func (ac *AnnouncementController) ModifyTemplate(ctx iris.Context) {
 	ctx.JSON(r)
 
 }
+
+// @summary 		创建纯文本公告
+// @description	 	创建一个新的纯文本公告, 需要公告管理员权限
+// @accept 			json
+// @produce 		json
+// @param			body body request.CreatePlainAnnouncementRequest true "创建纯文本公告参数"
+// @tags			announcement
+// @router 			/api/announcement/plain [post]
+// @success 		200	{object} response.AnnouncementResponse
+// @failure 		200	{object} response.FailureResponse
+func (ac *AnnouncementController) CreatePlainAnnouncement(ctx iris.Context) {
+	// 读取 http 参数体
+	var body request.CreatePlainAnnouncementRequest
+	err := ctx.ReadJSON(&body)
+	if err != nil {
+		// 参数不合法
+		r := &response.FailureResponse{}
+		r.Ok = false
+		r.Error = err.Error()
+		r.ErrorMessage = "参数错误"
+		ctx.JSON(r)
+		return
+	}
+	userLoggedIn := ctx.Values().Get("user").(*model.User)
+	if body.Visibility == model.VISIBILITY_SUPER_ADMIN && !userLoggedIn.IsSuperAdmin() {
+		// 没有超级管理员权限
+		r := &response.FailureResponse{}
+		r.Ok = false
+		r.ErrorMessage = "无权限创建超级管理员公告"
+		ctx.JSON(r)
+		return
+	}
+
+	announcement := &model.Announcement{
+
+		Name:      body.Name,
+		Type:      model.ANN_PLAIN_TEXT,
+		Groups:    make([]model.AnnouncementGroup, 0),
+		Crons:     make([]model.AnnouncementCron, 0),
+		Variables: make([]model.AnnouncementVariable, 0),
+		Content:   body.Content,
+	}
+
+	announcement.OwnerID = userLoggedIn.ID
+	announcement.Visibility = body.Visibility
+
+	for _, group := range body.Groups {
+		announcement.Groups = append(announcement.Groups, model.AnnouncementGroup{Group: group})
+
+	}
+
+	for _, cron := range body.Crons {
+		announcement.Crons = append(announcement.Crons, model.AnnouncementCron{Cron: cron})
+	}
+
+	for key, value := range body.Variables {
+		announcement.Variables = append(announcement.Variables, model.AnnouncementVariable{
+			Key:   key,
+			Value: value,
+		})
+	}
+
+	announcement, err = service.GetAnnouncementService().CreatePlainAnnouncement(announcement)
+
+	if err != nil {
+		r := &response.FailureResponse{}
+		r.Ok = false
+		r.Error = err.Error()
+		r.ErrorMessage = "创建失败"
+		ctx.JSON(r)
+		return
+	}
+
+	r := &response.AnnouncementResponse{}
+	r.Ok = true
+	r.Announcement = announcement
+	ctx.JSON(r)
+}

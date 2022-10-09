@@ -69,3 +69,13 @@ func (s *AnnouncementService) ModifyTemplate(template *model.Template, user *mod
 	}
 	return template.Update()
 }
+
+// CreatePlainAnnouncement 创建纯文本公告
+func (s *AnnouncementService) CreatePlainAnnouncement(announcement *model.Announcement) (*model.Announcement, error) {
+	announcement.Type = model.ANN_PLAIN_TEXT
+	announcement.TemplateID = 0
+	if err := announcement.Create(); err != nil {
+		return nil, err
+	}
+	return announcement, nil
+}

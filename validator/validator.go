@@ -40,7 +40,7 @@ func init() {
 	})
 	v.RegisterValidation("cron", func(fl validator.FieldLevel) bool {
 		// TODO: implement
-		return false
+		return true
 	})
 }
 

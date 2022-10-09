@@ -116,9 +116,10 @@ func main() {
 			}
 		}
 
-		// announcement := api.Party("/announcement", announcementAdmin)
-		// {
-		// }
+		announcement := api.Party("/announcement", announcementAdmin)
+		{
+			announcement.Post("/plain", announcementController.CreatePlainAnnouncement)
+		}
 
 		template := api.Party("/template", announcementAdmin)
 		{

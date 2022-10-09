@@ -43,10 +43,7 @@ const (
 )
 
 type Announcement struct {
-	BaseModel
-	Visibility VisibilityType
-	Owner      User             `gorm:"foreignKey:OwnerID"`
-	OwnerID    uint             `gorm:"not null"`
+	VisibleModel
 	Name       string           `gorm:"not null"`
 	Type       AnnouncementType `gorm:"not null"`
 	Groups     []AnnouncementGroup

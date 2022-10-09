@@ -11,3 +11,8 @@ type TemplateListResponse struct {
 	SuccessResponse
 	TemplateList []model.Template
 }
+
+type AnnouncementResponse struct {
+	SuccessResponse
+	Announcement *model.Announcement
+}

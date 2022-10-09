@@ -13,3 +13,12 @@ type ModifyTemplateRequest struct {
 	Name       string               `validate:"max=20"`
 	Content    string               `validate:"max=1000"`
 }
+
+type CreatePlainAnnouncementRequest struct {
+	Visibility model.VisibilityType `validate:"required,visibility"`
+	Name       string               `validate:"required,max=20"`
+	Groups     []int64
+	Crons      []string `validate:"cron"`
+	Variables  map[string]string
+	Content    string
+}
