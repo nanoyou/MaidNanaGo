@@ -38,6 +38,10 @@ func init() {
 			return false
 		}
 	})
+	v.RegisterValidation("cron", func(fl validator.FieldLevel) bool {
+		// TODO: implement
+		return false
+	})
 }
 
 func Get() *validator.Validate {
