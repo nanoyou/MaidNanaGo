@@ -5,6 +5,6 @@ type DebugInfo struct {
 	GoVersion string
 	QQ        struct {
 		Account int64
-		Online  bool `json:"online"`
+		Online  bool
 	}
 }
