@@ -176,9 +176,6 @@ func (ac *AnnouncementController) DeleteTemplate(ctx iris.Context) {
 // @success 		200	{object} response.TemplateResponse
 // @failure 		200	{object} response.FailureResponse
 func (ac *AnnouncementController) ModifyTemplate(ctx iris.Context) {
-	// TODO: implement
-	// 参考 controller/admin.go ModifyUser
-
 	// 获取当前登陆的用户
 	userLoggedIn := ctx.Values().Get("user").(*model.User)
 
@@ -205,7 +202,6 @@ func (ac *AnnouncementController) ModifyTemplate(ctx iris.Context) {
 		return
 	}
 
-	// TODO: 空值处理
 	template.Content = body.Content
 	template.Name = body.Name
 	template.Visibility = body.Visibility
