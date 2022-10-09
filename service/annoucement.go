@@ -90,3 +90,16 @@ func (s *AnnouncementService) CreateTemplateAnnouncement(announcement *model.Ann
 	}
 	return announcement, nil
 }
+
+// GetAnnouncementsByUser 获取用户可见的公告列表
+func (s *AnnouncementService) GetAnnouncementsByUser(user *model.User) ([]model.Announcement, error) {
+	// 获取全部公告
+	announcements, err := model.GetAllAnnouncements()
+	if err != nil {
+		return nil, err
+	}
+	// 选择出所有人可见的权限
+	return slice.Filter(announcements, func(a model.Announcement) bool {
+		return a.IsVisible(user)
+	}), nil
+}
