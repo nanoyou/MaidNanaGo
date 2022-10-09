@@ -81,6 +81,7 @@ func (s *AnnouncementService) CreatePlainAnnouncement(announcement *model.Announ
 	return announcement, nil
 }
 
+// CreateTemplateAnnouncement 创建模板公告
 func (s *AnnouncementService) CreateTemplateAnnouncement(announcement *model.Announcement) (*model.Announcement, error) {
 	announcement.Type = model.ANN_TEMPLATE
 	announcement.Content = ""
