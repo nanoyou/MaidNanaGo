@@ -128,3 +128,11 @@ func (s *AnnouncementService) DeleteAnnoucement(announcementId uint, user *model
 	}
 	return a.Delete()
 }
+
+// ModifyPlainAnnouncement 修改公告信息
+func (s *AnnouncementService) ModifyAnnoucement(announcement *model.Announcement, user *model.User) error {
+	if !announcement.IsEditable(user) {
+		return errors.New("权限不足")
+	}
+	return announcement.Update()
+}
