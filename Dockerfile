@@ -18,6 +18,5 @@ WORKDIR /usr/local/maidnana/src/MaidNanaGo
 RUN export GOPATH=/usr/lib/go && go install github.com/swaggo/swag/cmd/swag@latest
 RUN /usr/lib/go/bin/swag init && go build -o /usr/local/maidnana/MaidNanaGo/MaidNanaGo
 
-COPY supervisord.conf /etc/supervisord.conf
-
-CMD supervisord -c /etc/supervisord.conf
+WORKDIR /usr/local/maidnana/MaidNanaGo
+CMD ./MaidNanaGo
